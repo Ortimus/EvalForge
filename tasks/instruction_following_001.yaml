@@ -1,0 +1,15 @@
+task_id: instruction_following_001
+category: instruction_following
+difficulty: hard
+description: "Satisfy 3 simultaneous formatting and content constraints"
+prompt_template: |
+  Write a two-sentence description of photosynthesis.
+  Constraints: (1) Do not use the word 'light', (2) each sentence must be under 20 words,
+  (3) the second sentence must begin with 'This process'.
+evaluation_type: llm_judge
+judge_rubric: |
+  Score the response 1-5 on how well it satisfies ALL THREE constraints:
+  1. Does not use the word 'light' (check carefully)
+  2. Each sentence is under 20 words
+  3. Second sentence begins with 'This process'
+  Score 5 only if all three are satisfied perfectly. Deduct 1-2 points per violated constraint.

@@ -1,0 +1,11 @@
+# Default model configurations for quick evaluation runs
+defaults:
+  anthropic:
+    model_id: claude-sonnet-4-20250514
+    max_tokens: 1024
+  openai:
+    model_id: gpt-4o
+    max_tokens: 1024
+  ollama:
+    model_id: llama3
+    base_url: http://localhost:11434

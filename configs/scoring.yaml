@@ -1,0 +1,7 @@
+judge:
+  model: claude-sonnet-4-20250514
+  temperature: 0.0          # deterministic judging
+
+thresholds:
+  pass_score: 3.0           # minimum LLM judge score to count as "pass"
+  strong_score: 4.5         # threshold for "strong performance" badge

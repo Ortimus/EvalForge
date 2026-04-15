@@ -1,0 +1,13 @@
+task_id: logical_deduction_001
+category: logical_deduction
+difficulty: medium
+description: "Three-step syllogism chain"
+prompt_template: |
+  All mammals are warm-blooded.
+  All warm-blooded animals regulate their body temperature internally.
+  A dolphin is a mammal.
+
+  Does a dolphin regulate its body temperature internally?
+  Answer with only YES or NO.
+expected_answer: "YES"
+evaluation_type: exact_match

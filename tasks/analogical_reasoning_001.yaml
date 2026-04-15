@@ -1,0 +1,13 @@
+task_id: analogical_reasoning_001
+category: analogical_reasoning
+difficulty: medium
+description: "Cross-domain A:B::C:? analogy"
+prompt_template: |
+  Complete the analogy. Respond with a single word only.
+
+  Composer : Symphony :: Architect : ___
+expected_answer: "Building"
+evaluation_type: llm_judge
+judge_rubric: |
+  Score 1-5: Award 5 if the answer is semantically correct (Building, Structure, Blueprint
+  are all valid). Award 3 if the answer is loosely related. Award 1 if unrelated.
