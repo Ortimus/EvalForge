@@ -1,6 +1,6 @@
 """
 EvalForge Streamlit app — main entry point.
-Run with: streamlit run ui/app.py
+Run with: python3 -m streamlit run ui/app.py
 """
 import streamlit as st
 
@@ -10,10 +10,10 @@ st.sidebar.title("EvalForge")
 page = st.sidebar.radio("Navigate", ["Leaderboard", "Capability Radar", "Task Drill-down"])
 
 if page == "Leaderboard":
-    from ui.pages.leaderboard import render
+    from pages.leaderboard import render        # ← relative, no 'ui.' prefix
 elif page == "Capability Radar":
-    from ui.pages.radar import render
+    from pages.radar import render
 else:
-    from ui.pages.drilldown import render
+    from pages.drilldown import render
 
 render()

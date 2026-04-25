@@ -19,3 +19,8 @@ mlflow/
 # OS
 .DS_Store
 Thumbs.db
+
+# Runtime stuff
+.api.pid
+.ui.pid
+logs/

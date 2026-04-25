@@ -14,14 +14,15 @@ services:
       - "5432:5432"
 
   mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.13.0
+    image: python:3.11-slim
     command: >
+      bash -c "pip install mlflow psycopg2-binary -q &&
       mlflow server
       --backend-store-uri postgresql://evalforge:evalforge@postgres:5432/evalforge
       --default-artifact-root /mlflow/artifacts
-      --host 0.0.0.0
+      --host 0.0.0.0"
     ports:
-      - "5000:5000"
+      - "5001:5000"
     depends_on:
       - postgres
     volumes:
@@ -40,6 +41,8 @@ services:
       - .:/app
 
   ui:
+    environment:
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
     build:
       context: .
       dockerfile: docker/Dockerfile.ui

@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+logs/
+.api.pid
+.ui.pid
+mlruns/
+.git/
+notebooks/
+tests/
