@@ -8,6 +8,7 @@ venv/
 
 # Environment
 .env
+.env.docker
 
 # MLflow
 mlruns/
@@ -24,3 +25,4 @@ Thumbs.db
 .api.pid
 .ui.pid
 logs/
+mlflow.db

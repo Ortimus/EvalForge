@@ -20,13 +20,20 @@ services:
       mlflow server
       --backend-store-uri postgresql://evalforge:evalforge@postgres:5432/evalforge
       --default-artifact-root /mlflow/artifacts
-      --host 0.0.0.0"
+      --host 0.0.0.0
+      --allowed-hosts '*'"
     ports:
       - "5001:5000"
     depends_on:
       - postgres
     volumes:
       - mlflow_artifacts:/mlflow/artifacts
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s   # give pip install time to finish
 
   api:
     build:
@@ -34,9 +41,14 @@ services:
       dockerfile: docker/Dockerfile.api
     ports:
       - "8000:8000"
-    env_file: .env
+    env_file: .env.docker
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
-      - mlflow
+      mlflow:
+        condition: service_healthy   # ← wait for healthcheck to pass
+      postgres:
+        condition: service_started
     volumes:
       - .:/app
 
@@ -48,7 +60,7 @@ services:
       dockerfile: docker/Dockerfile.ui
     ports:
       - "8501:8501"
-    env_file: .env
+    env_file: .env.docker
     depends_on:
       - api
     volumes:

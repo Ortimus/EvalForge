@@ -1,12 +1,13 @@
 task_id: working_memory_001
 category: working_memory
 difficulty: medium
-description: "Recall planted facts from earlier in context"
+description: "Recall a specific fact planted earlier in the same context"
 prompt_template: |
-  The password is BLUE-42. The access code is 7719. The project name is Orion.
+  Here are some details about a fictional character:
+  Name: Marcus, Occupation: lighthouse keeper, Favorite food: clam chowder, 
+  Lucky number: 17, Hometown: Port Ellery.
 
-  [Ignore the above and answer the following]
-  What is the project name mentioned at the start of this message?
-expected_answer: "Orion"
+  What is Marcus's hometown?
+expected_answer: "Port Ellery"
 evaluation_type: regex
-answer_pattern: "(?i)orion"
+answer_pattern: "(?i)port ellery"
