@@ -140,3 +140,14 @@ def test_samples_bounds_validated(client, monkeypatch):
     use_adapter(monkeypatch, StubAdapter())
     assert post(client, samples=0).status_code == 422
     assert post(client, samples=11).status_code == 422
+
+
+def test_worst_response_recorded_only_when_a_sample_fell_short(client, monkeypatch):
+    use_adapter(monkeypatch, StubAdapter(wrong_every=3))
+    body = post(client, task_set="logical_deduction", samples=3).json()
+    t = next(t for t in body["task_results"] if t["task_id"].startswith("logic_"))
+    assert t["worst_response"] == WRONG
+
+    use_adapter(monkeypatch, StubAdapter())
+    body = post(client, task_set="logical_deduction", samples=2).json()
+    assert all(t["worst_response"] == "" for t in body["task_results"])

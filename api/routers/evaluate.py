@@ -51,6 +51,7 @@ class TaskResult(BaseModel):
     rationale: str                # from the first successful sample
     latency_ms: float             # mean over successful samples
     response: str                 # first successful sample's response
+    worst_response: str = ""      # response of the lowest-scoring sample (for debugging failures)
 
 
 class EvaluateResponse(BaseModel):
@@ -119,6 +120,7 @@ def run_evaluation(request: EvaluateRequest):
             scores, raws, latencies, passes = [], [], [], []
             errors, task_error = 0, None
             first_response, first_rationale = "", ""
+            worst_response, worst_score = "", None
 
             for _ in range(request.samples):
                 t0 = time.perf_counter()
@@ -134,6 +136,8 @@ def run_evaluation(request: EvaluateRequest):
 
                 if not scores:
                     first_response, first_rationale = response, scored["rationale"]
+                if worst_score is None or scored["score"] < worst_score:
+                    worst_score, worst_response = scored["score"], response
                 scores.append(scored["score"])
                 raws.append(scored["raw_score"])
                 latencies.append(latency_ms)
@@ -163,6 +167,7 @@ def run_evaluation(request: EvaluateRequest):
                 errors=errors, error=task_error,
                 rationale=first_rationale, latency_ms=round(mean_latency, 2),
                 response=first_response,
+                worst_response=worst_response if min(scores) < 1.0 else "",
             ))
 
         scored_results = [t for t in task_results if t.sample_scores]
