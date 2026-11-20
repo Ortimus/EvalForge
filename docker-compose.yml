@@ -16,9 +16,9 @@ services:
   mlflow:
     image: python:3.11-slim
     command: >
-      bash -c "pip install mlflow psycopg2-binary -q &&
+      bash -c "pip install mlflow==3.11.1 psycopg2-binary -q &&
       mlflow server
-      --backend-store-uri postgresql://evalforge:evalforge@postgres:5432/evalforge
+      --backend-store-uri postgresql+psycopg2://evalforge:evalforge@postgres:5432/evalforge
       --default-artifact-root /mlflow/artifacts
       --host 0.0.0.0
       --allowed-hosts '*'"
