@@ -10,4 +10,4 @@ prompt_template: |-
   Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
 evaluation_type: regex
 expected_answer: extravagant
-answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:extravagant|lavish|wasteful|profligate|spendthrift)\W*\Z
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:extravagant|lavish|wasteful|profligate|spendthrift)(?:\s*\([^)\n]*\))?\W*\Z

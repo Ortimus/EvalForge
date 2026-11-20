@@ -10,4 +10,4 @@ prompt_template: |-
   Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
 evaluation_type: regex
 expected_answer: cut
-answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:cut)\W*\Z
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:cut)(?:\s*\([^)\n]*\))?\W*\Z

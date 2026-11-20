@@ -217,3 +217,13 @@ def test_checks_scorer_behaviour():
     assert partial["score"] == 0.5 and not partial["all_passed"] and "min_words=20" in partial["failed"]
     with pytest.raises(ValueError):
         s("x", [{"not_a_check": 1}])
+
+
+def test_analogy_accepts_one_parenthetical_gloss_but_not_wrong_answers():
+    task = next(t for t in load_all_tasks() if t.task_id == "analogy_hard_03")
+    ok = lambda r: SCORER.score_regex(r, task.answer_pattern)["score"]
+    assert ok("Answer: Electric potential (voltage)") == 1.0
+    assert ok("Answer: potential") == 1.0
+    assert ok("Answer: Current (potential)") == 0.0      # leading answer must match
+    assert ok("Answer: potential (a) (b)") == 0.0         # only one gloss
+    assert ok("Answer: potential\nAnswer: zzzz") == 0.0

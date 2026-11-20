@@ -47,8 +47,14 @@ def answer_regex(expected: str) -> str:
 
 
 def answer_regex_any(options: list[str]) -> str:
+    """
+    Accept any listed answer, optionally followed by ONE parenthetical gloss,
+    e.g. 'Answer: Electric potential (voltage)'. Verbose-but-correct models would
+    otherwise score 0, measuring terseness instead of reasoning. The leading
+    answer must still match, and only a single (...) group is allowed.
+    """
     alts = "|".join(re.escape(o) for o in options)
-    return rf"(?is)answer:\W*(?:(?:a|an|the)\s+)?(?:{alts})\W*\Z"
+    return rf"(?is)answer:\W*(?:(?:a|an|the)\s+)?(?:{alts})(?:\s*\([^)\n]*\))?\W*\Z"
 
 
 def _str_presenter(dumper, data):

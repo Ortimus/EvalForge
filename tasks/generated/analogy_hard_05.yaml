@@ -10,4 +10,4 @@ prompt_template: |-
   Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
 evaluation_type: regex
 expected_answer: particles
-answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:particles|molecules|solute|gas|solutes)\W*\Z
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:particles|molecules|solute|gas|solutes)(?:\s*\([^)\n]*\))?\W*\Z
