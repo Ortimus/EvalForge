@@ -5,6 +5,22 @@ import anthropic
 from .base import BaseModelAdapter, ModelMetadata
 
 
+def extract_text(message) -> str:
+    """
+    Join the text blocks of a Messages API response.
+
+    Newer models may return other block types (e.g. 'thinking') before the
+    answer, so content[0].text is not safe. Only 'text' blocks are the answer.
+    """
+    text = "".join(b.text for b in message.content if getattr(b, "type", None) == "text")
+    if not text:
+        raise ValueError(
+            f"Response contained no text block (stop_reason={getattr(message, 'stop_reason', None)}, "
+            f"block types={[getattr(b, 'type', '?') for b in message.content]})"
+        )
+    return text
+
+
 class AnthropicAdapter(BaseModelAdapter):
 
     def __init__(self, model_id: str, api_key: str | None = None):
@@ -19,7 +35,7 @@ class AnthropicAdapter(BaseModelAdapter):
             max_tokens=max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
-        return message.content[0].text
+        return extract_text(message)
 
     def get_metadata(self) -> ModelMetadata:
         return ModelMetadata(

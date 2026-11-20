@@ -5,6 +5,7 @@ Returns a 1-5 score plus the judge's rationale for auditability.
 import anthropic
 import os
 
+from adapters.anthropic_adapter import extract_text
 from adapters.config import judge_config
 
 class LLMJudgeScorer:
@@ -25,7 +26,6 @@ Always respond in JSON with keys: score (int 1-5), rationale (str)."""
             api_key=os.getenv("ANTHROPIC_API_KEY")   # ← explicit, not implicit
         )
         self.judge_model = judge_model or cfg["model"]
-        self.temperature = cfg.get("temperature", 0.0)
         self.max_tokens = cfg.get("max_tokens", 512)
 
     def score(self, response: str, rubric: str, task_prompt: str = "") -> dict:
@@ -44,9 +44,8 @@ Return only valid JSON.
         message = self.client.messages.create(
             model=self.judge_model,
             max_tokens=self.max_tokens,
-            temperature=self.temperature,
             system=self.SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_message}],
         )
         import json
-        return json.loads(message.content[0].text)
+        return json.loads(extract_text(message))

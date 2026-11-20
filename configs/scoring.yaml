@@ -3,7 +3,6 @@ judge:
   # self-preference bias. Kept on Anthropic for now (only key configured).
   provider: anthropic
   model: claude-sonnet-5-5
-  temperature: 0.0          # deterministic judging
   max_tokens: 512
 
 thresholds:
