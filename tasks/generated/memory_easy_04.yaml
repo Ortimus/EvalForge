@@ -1,0 +1,19 @@
+task_id: memory_easy_04
+category: working_memory
+difficulty: easy
+description: Recall one badge number from 5 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Rae Quist: badge 9832
+  - Nora Rossi: badge 2644
+  - Kai Kwon: badge 2025
+  - Sam Okafor: badge 7024
+  - Ben Dunn: badge 7470
+
+  What is the current badge number of Kai Kwon?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '2025'
+answer_pattern: (?is)answer:\W*2025\W*\Z

@@ -1,0 +1,17 @@
+task_id: instr_medium_03
+category: instruction_following
+difficulty: medium
+description: 4 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a mountain hike. Follow every requirement:
+  - Include the word 'because'.
+  - Write exactly 4 bullet points, each starting with '- ', and nothing else.
+  - Write entirely in lowercase letters.
+  - Use at most 70 words.
+evaluation_type: checks
+checks:
+- contains:
+  - because
+- num_bullets: 4
+- all_lowercase: true
+- max_words: 70

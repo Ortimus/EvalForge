@@ -1,0 +1,23 @@
+task_id: instr_hard_04
+category: instruction_following
+difficulty: hard
+description: 6 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a quiet library. Follow every requirement:
+  - Finish with exactly this sentence: 'That is all.'
+  - Use at most 70 words.
+  - Include the word 'because'.
+  - Use at least 35 words.
+  - Write exactly 3 sentences.
+  - Do not use the words 'read' or 'book'.
+evaluation_type: checks
+checks:
+- ends_with: That is all.
+- max_words: 70
+- contains:
+  - because
+- min_words: 35
+- num_sentences: 3
+- forbidden_words:
+  - read
+  - book

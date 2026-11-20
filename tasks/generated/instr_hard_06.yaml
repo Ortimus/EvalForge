@@ -1,0 +1,23 @@
+task_id: instr_hard_06
+category: instruction_following
+difficulty: hard
+description: 6 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a mountain hike. Follow every requirement:
+  - Write exactly 4 bullet points, each starting with '- ', and nothing else.
+  - Use at least 35 words.
+  - Include the word 'because'.
+  - Do not use the words 'trail' or 'mountain'.
+  - Use at most 50 words.
+  - Write entirely in lowercase letters.
+evaluation_type: checks
+checks:
+- num_bullets: 4
+- min_words: 35
+- contains:
+  - because
+- forbidden_words:
+  - trail
+  - mountain
+- max_words: 50
+- all_lowercase: true

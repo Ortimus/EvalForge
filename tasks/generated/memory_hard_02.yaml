@@ -1,0 +1,77 @@
+task_id: memory_hard_02
+category: working_memory
+difficulty: hard
+description: Recall one badge number from 60 records with in-place updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Quinn Ibarra: badge 3715
+  - Kai Quist: badge 8894
+  - Ben Brandt: badge 7756
+  - Fay Quist: badge 8319
+  - Pia Abbott: badge 2757
+  - Cleo Quist: badge 4514
+  - Rae Mercer: badge 3554
+  - Eli Hayes: badge 4110
+  - Fay Sato: badge 2677
+  - Fay Jensen: badge 4835
+  - Omar Price: badge 8680
+  - Fay Grant: badge 4054
+  - Rae Abbott: badge 8479
+  - Omar Ellis: badge 6769
+  - Dev Grant: badge 5873
+  - Kai Abbott: badge 3373
+  - Kai Dunn: badge 9621
+  - Fay Price: badge 5720
+  - Gil Tran: badge 4941
+  - Lena Kwon: badge 3861
+  - Eli Price: badge 6175
+  - Rae Kwon: badge 3705
+  - Lena Ibarra: badge 2467
+  - Ada Rossi: badge 5220
+  - Jon Hayes: badge 3964
+  - Ada Mercer: badge 7434
+  - Cleo Lund: badge 7593
+  - Nora Kwon: badge 1207
+  - Cleo Ibarra: badge 1845
+  - Jon Dunn: badge 2179
+  - Iris Brandt: badge 9810
+  - Ada Brandt: badge 7924
+  - Ben Jensen: badge 3568
+  - Nora Price: badge 5365
+  - Rae Tran: badge 7315
+  - Ben Ibarra: badge 5923
+  - Ben Quist: badge 1886
+  - Cleo Abbott: badge 9655
+  - Fay Lund: badge 8287
+  - Tess Grant: badge 6856
+  - Cleo Ellis: badge 1551
+  - Eli Brandt: badge 4963
+  - Omar Abbott: badge 8745
+  - Quinn Mercer: badge 7061
+  - Omar Tran: badge 5329
+  - Iris Nair: badge 5460
+  - Gil Abbott: badge 3046
+  - Dev Price: badge 9503
+  - Fay Ellis: badge 3734
+  - Lena Hayes: badge 7522
+  - Omar Quist: badge 8393
+  - Ada Ellis: badge 2561
+  - Milo Kwon: badge 4788
+  - Ben Tran: badge 5359
+  - Milo Castillo: badge 5153
+  - Quinn Hayes: badge 1706
+  - Rae Hayes: badge 2085
+  - Nora Sato: badge 7123
+  - Lena Dunn: badge 4311
+  - Eli Kwon: badge 9049
+
+  Update: Quinn Ibarra's badge was reissued; the new number is 2232.
+  Update: Tess Grant's badge was reissued; the new number is 2630.
+
+  What is the current badge number of Quinn Ibarra?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '2232'
+answer_pattern: (?is)answer:\W*2232\W*\Z

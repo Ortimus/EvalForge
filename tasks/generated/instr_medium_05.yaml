@@ -1,0 +1,18 @@
+task_id: instr_medium_05
+category: instruction_following
+difficulty: medium
+description: 4 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a rainy day. Follow every requirement:
+  - Write exactly 4 bullet points, each starting with '- ', and nothing else.
+  - Do not use the words 'wet' or 'rain'.
+  - Use at most 70 words.
+  - Write entirely in lowercase letters.
+evaluation_type: checks
+checks:
+- num_bullets: 4
+- forbidden_words:
+  - wet
+  - rain
+- max_words: 70
+- all_lowercase: true

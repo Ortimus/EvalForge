@@ -1,0 +1,19 @@
+task_id: instr_medium_02
+category: instruction_following
+difficulty: medium
+description: 4 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a quiet library. Follow every requirement:
+  - Do not use the words 'read' or 'books'.
+  - Begin your response with the word 'Often'.
+  - Include the word 'because'.
+  - Write exactly 2 sentences.
+evaluation_type: checks
+checks:
+- forbidden_words:
+  - read
+  - books
+- starts_with: Often
+- contains:
+  - because
+- num_sentences: 2

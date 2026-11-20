@@ -1,0 +1,39 @@
+task_id: memory_medium_06
+category: working_memory
+difficulty: medium
+description: Recall one badge number from 25 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Kai Foster: badge 9020
+  - Jon Jensen: badge 5889
+  - Sam Dunn: badge 3589
+  - Quinn Dunn: badge 5644
+  - Hugo Dunn: badge 3425
+  - Ben Lund: badge 1384
+  - Dev Mercer: badge 2139
+  - Omar Okafor: badge 5661
+  - Milo Brandt: badge 9107
+  - Sam Grant: badge 3838
+  - Rae Quist: badge 2576
+  - Omar Hayes: badge 9076
+  - Milo Nair: badge 1440
+  - Eli Abbott: badge 5249
+  - Iris Ellis: badge 6008
+  - Tess Kwon: badge 3225
+  - Kai Castillo: badge 9148
+  - Ben Jensen: badge 4894
+  - Nora Nair: badge 8665
+  - Jon Lund: badge 4642
+  - Ada Brandt: badge 6763
+  - Gil Quist: badge 5965
+  - Lena Price: badge 9211
+  - Kai Sato: badge 2483
+  - Milo Price: badge 7616
+
+  What is the current badge number of Dev Mercer?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '2139'
+answer_pattern: (?is)answer:\W*2139\W*\Z

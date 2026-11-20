@@ -1,0 +1,39 @@
+task_id: memory_medium_02
+category: working_memory
+difficulty: medium
+description: Recall one badge number from 25 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Jon Ibarra: badge 8672
+  - Hugo Brandt: badge 4214
+  - Hugo Hayes: badge 3583
+  - Eli Castillo: badge 7225
+  - Sam Castillo: badge 4591
+  - Omar Okafor: badge 1521
+  - Eli Kwon: badge 4203
+  - Nora Mercer: badge 1313
+  - Kai Mercer: badge 4809
+  - Nora Foster: badge 9469
+  - Ben Sato: badge 5026
+  - Hugo Nair: badge 3614
+  - Fay Foster: badge 9196
+  - Rae Hayes: badge 6237
+  - Sam Mercer: badge 7658
+  - Dev Abbott: badge 1821
+  - Sam Dunn: badge 3655
+  - Hugo Jensen: badge 4398
+  - Gil Lund: badge 2504
+  - Kai Abbott: badge 1360
+  - Ada Abbott: badge 9518
+  - Eli Tran: badge 9301
+  - Dev Ibarra: badge 2619
+  - Dev Sato: badge 2937
+  - Omar Foster: badge 8880
+
+  What is the current badge number of Hugo Hayes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '3583'
+answer_pattern: (?is)answer:\W*3583\W*\Z

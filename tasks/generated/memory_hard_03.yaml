@@ -1,0 +1,77 @@
+task_id: memory_hard_03
+category: working_memory
+difficulty: hard
+description: Recall one badge number from 60 records with in-place updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Kai Grant: badge 5937
+  - Quinn Foster: badge 7077
+  - Nora Brandt: badge 1094
+  - Dev Ibarra: badge 7066
+  - Ben Tran: badge 9502
+  - Pia Mercer: badge 6224
+  - Rae Ellis: badge 5026
+  - Dev Quist: badge 7669
+  - Sam Jensen: badge 7228
+  - Lena Quist: badge 7370
+  - Hugo Kwon: badge 6269
+  - Omar Okafor: badge 7880
+  - Lena Castillo: badge 3703
+  - Cleo Jensen: badge 1082
+  - Nora Nair: badge 6411
+  - Nora Ellis: badge 5776
+  - Tess Rossi: badge 7700
+  - Pia Quist: badge 8361
+  - Jon Rossi: badge 3962
+  - Rae Sato: badge 7232
+  - Eli Ellis: badge 5195
+  - Kai Brandt: badge 1319
+  - Milo Sato: badge 2786
+  - Omar Grant: badge 1515
+  - Fay Castillo: badge 6104
+  - Ada Okafor: badge 6721
+  - Jon Ibarra: badge 8900
+  - Sam Hayes: badge 4454
+  - Milo Rossi: badge 1696
+  - Cleo Dunn: badge 7329
+  - Eli Quist: badge 5699
+  - Rae Rossi: badge 1807
+  - Tess Abbott: badge 7550
+  - Pia Abbott: badge 2146
+  - Ben Castillo: badge 9516
+  - Iris Ellis: badge 8897
+  - Nora Okafor: badge 7498
+  - Ada Jensen: badge 8847
+  - Hugo Quist: badge 4722
+  - Rae Mercer: badge 9624
+  - Sam Nair: badge 9339
+  - Sam Mercer: badge 8233
+  - Nora Kwon: badge 4584
+  - Eli Hayes: badge 9740
+  - Quinn Mercer: badge 9920
+  - Jon Hayes: badge 4882
+  - Iris Hayes: badge 1397
+  - Iris Brandt: badge 7332
+  - Fay Foster: badge 7882
+  - Omar Jensen: badge 9495
+  - Quinn Abbott: badge 1388
+  - Tess Dunn: badge 3458
+  - Gil Abbott: badge 3515
+  - Kai Kwon: badge 3204
+  - Kai Hayes: badge 4838
+  - Sam Tran: badge 2894
+  - Tess Hayes: badge 2555
+  - Jon Grant: badge 5922
+  - Gil Price: badge 5688
+  - Ben Mercer: badge 2214
+
+  Update: Ben Mercer's badge was reissued; the new number is 5815.
+  Update: Sam Nair's badge was reissued; the new number is 2961.
+
+  What is the current badge number of Sam Nair?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '2961'
+answer_pattern: (?is)answer:\W*2961\W*\Z

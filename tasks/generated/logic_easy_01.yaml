@@ -1,0 +1,16 @@
+task_id: logic_easy_01
+category: logical_deduction
+difficulty: easy
+description: Transitive height ordering over 3 people
+prompt_template: |-
+  Consider these statements about 3 people.
+
+  Hana is taller than Jun.
+  Jun is taller than Ivo.
+
+  Assume only these statements are true. Who is the tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Hana
+answer_pattern: (?is)answer:\W*Hana\W*\Z

@@ -1,0 +1,23 @@
+task_id: instr_hard_03
+category: instruction_following
+difficulty: hard
+description: 6 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about learning to cook. Follow every requirement:
+  - Include the word 'because'.
+  - Write exactly 4 bullet points, each starting with '- ', and nothing else.
+  - Do not use the words 'recipe' or 'kitchen'.
+  - Use at most 90 words.
+  - Use at least 25 words.
+  - Write entirely in lowercase letters.
+evaluation_type: checks
+checks:
+- contains:
+  - because
+- num_bullets: 4
+- forbidden_words:
+  - recipe
+  - kitchen
+- max_words: 90
+- min_words: 25
+- all_lowercase: true

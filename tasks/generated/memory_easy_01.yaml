@@ -1,0 +1,19 @@
+task_id: memory_easy_01
+category: working_memory
+difficulty: easy
+description: Recall one badge number from 5 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Jon Grant: badge 6417
+  - Eli Nair: badge 3567
+  - Dev Nair: badge 9962
+  - Eli Ellis: badge 5896
+  - Omar Lund: badge 2446
+
+  What is the current badge number of Jon Grant?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '6417'
+answer_pattern: (?is)answer:\W*6417\W*\Z

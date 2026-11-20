@@ -1,0 +1,39 @@
+task_id: memory_medium_01
+category: working_memory
+difficulty: medium
+description: Recall one badge number from 25 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Tess Tran: badge 8427
+  - Pia Kwon: badge 7871
+  - Tess Rossi: badge 9180
+  - Kai Abbott: badge 1797
+  - Nora Okafor: badge 6626
+  - Omar Ibarra: badge 5448
+  - Gil Ellis: badge 8832
+  - Dev Lund: badge 8674
+  - Hugo Rossi: badge 7025
+  - Ada Dunn: badge 6582
+  - Omar Kwon: badge 1622
+  - Quinn Price: badge 5429
+  - Milo Abbott: badge 7089
+  - Ben Jensen: badge 9290
+  - Tess Foster: badge 8210
+  - Sam Ibarra: badge 6764
+  - Jon Ellis: badge 5512
+  - Sam Foster: badge 7793
+  - Ben Quist: badge 6451
+  - Sam Mercer: badge 6510
+  - Pia Price: badge 7382
+  - Fay Rossi: badge 4513
+  - Pia Castillo: badge 6132
+  - Iris Brandt: badge 2047
+  - Iris Dunn: badge 4894
+
+  What is the current badge number of Omar Ibarra?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '5448'
+answer_pattern: (?is)answer:\W*5448\W*\Z

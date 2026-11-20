@@ -1,0 +1,14 @@
+task_id: instr_easy_05
+category: instruction_following
+difficulty: easy
+description: 2 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about learning to cook. Follow every requirement:
+  - Write entirely in lowercase letters.
+  - Do not use the words 'food' or 'kitchen'.
+evaluation_type: checks
+checks:
+- all_lowercase: true
+- forbidden_words:
+  - food
+  - kitchen

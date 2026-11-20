@@ -1,0 +1,39 @@
+task_id: memory_medium_03
+category: working_memory
+difficulty: medium
+description: Recall one badge number from 25 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Gil Grant: badge 7207
+  - Iris Nair: badge 4403
+  - Ben Foster: badge 6550
+  - Gil Lund: badge 8356
+  - Eli Kwon: badge 6621
+  - Lena Kwon: badge 5071
+  - Tess Foster: badge 5275
+  - Nora Ibarra: badge 8105
+  - Sam Abbott: badge 8210
+  - Hugo Dunn: badge 5868
+  - Iris Foster: badge 1905
+  - Nora Foster: badge 8935
+  - Sam Hayes: badge 5276
+  - Fay Dunn: badge 1776
+  - Dev Ibarra: badge 5740
+  - Hugo Abbott: badge 6922
+  - Dev Sato: badge 6295
+  - Quinn Okafor: badge 3088
+  - Rae Jensen: badge 7804
+  - Eli Lund: badge 3133
+  - Nora Abbott: badge 9077
+  - Ada Kwon: badge 2271
+  - Pia Jensen: badge 3766
+  - Hugo Brandt: badge 2873
+  - Milo Dunn: badge 6878
+
+  What is the current badge number of Sam Hayes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '5276'
+answer_pattern: (?is)answer:\W*5276\W*\Z

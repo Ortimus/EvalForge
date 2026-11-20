@@ -1,0 +1,26 @@
+task_id: logic_hard_04
+category: logical_deduction
+difficulty: hard
+description: Transitive height ordering over 10 people
+prompt_template: |-
+  Consider these statements about 10 people.
+
+  Leo is taller than Farah.
+  Hana is older than Jun.
+  Chen is shorter than Farah.
+  Bruno is older than Ivo.
+  Kara is older than Hana.
+  Ivo is taller than Kara.
+  Chen is taller than Gus.
+  Dara is shorter than Kara.
+  Dara is taller than Hana.
+  Bruno is taller than Ivo.
+  Leo is shorter than Jun.
+  Jun is shorter than Hana.
+
+  Assume only these statements are true. Who is the fourth tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Dara
+answer_pattern: (?is)answer:\W*Dara\W*\Z

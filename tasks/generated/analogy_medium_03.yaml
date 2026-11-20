@@ -1,0 +1,13 @@
+task_id: analogy_medium_03
+category: analogical_reasoning
+difficulty: medium
+description: Complete the analogy
+prompt_template: |-
+  Complete the analogy with a single word or short phrase.
+
+  Chef : Kitchen :: Pilot : ___
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: cockpit
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:cockpit|flight\ deck)\W*\Z

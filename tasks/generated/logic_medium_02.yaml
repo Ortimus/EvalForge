@@ -1,0 +1,19 @@
+task_id: logic_medium_02
+category: logical_deduction
+difficulty: medium
+description: Transitive height ordering over 6 people
+prompt_template: |-
+  Consider these statements about 6 people.
+
+  Dara is shorter than Leo.
+  Gus is shorter than Elio.
+  Gus is taller than Chen.
+  Jun is shorter than Dara.
+  Elio is shorter than Jun.
+
+  Assume only these statements are true. Who is the shortest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Chen
+answer_pattern: (?is)answer:\W*Chen\W*\Z

@@ -1,0 +1,12 @@
+task_id: instr_easy_01
+category: instruction_following
+difficulty: easy
+description: 2 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a mountain hike. Follow every requirement:
+  - Finish with exactly this sentence: 'That is all.'
+  - Use at most 90 words.
+evaluation_type: checks
+checks:
+- ends_with: That is all.
+- max_words: 90

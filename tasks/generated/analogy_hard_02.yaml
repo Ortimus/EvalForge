@@ -1,0 +1,13 @@
+task_id: analogy_hard_02
+category: analogical_reasoning
+difficulty: hard
+description: Complete the analogy
+prompt_template: |-
+  Complete the analogy with a single word or short phrase.
+
+  Benevolent : Malevolent :: Frugal : ___
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: extravagant
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:extravagant|lavish|wasteful|profligate|spendthrift)\W*\Z

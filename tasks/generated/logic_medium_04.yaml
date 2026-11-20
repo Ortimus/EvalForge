@@ -1,0 +1,19 @@
+task_id: logic_medium_04
+category: logical_deduction
+difficulty: medium
+description: Transitive height ordering over 6 people
+prompt_template: |-
+  Consider these statements about 6 people.
+
+  Kara is shorter than Jun.
+  Dara is taller than Bruno.
+  Elio is shorter than Alice.
+  Bruno is taller than Alice.
+  Jun is shorter than Elio.
+
+  Assume only these statements are true. Who is the tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Dara
+answer_pattern: (?is)answer:\W*Dara\W*\Z

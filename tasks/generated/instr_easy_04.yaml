@@ -1,0 +1,13 @@
+task_id: instr_easy_04
+category: instruction_following
+difficulty: easy
+description: 2 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about learning to cook. Follow every requirement:
+  - Include the word 'because'.
+  - Use at least 35 words.
+evaluation_type: checks
+checks:
+- contains:
+  - because
+- min_words: 35

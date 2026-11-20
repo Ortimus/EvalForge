@@ -1,0 +1,39 @@
+task_id: memory_medium_04
+category: working_memory
+difficulty: medium
+description: Recall one badge number from 25 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Ada Ellis: badge 1496
+  - Kai Dunn: badge 4196
+  - Tess Ellis: badge 6559
+  - Lena Hayes: badge 9690
+  - Omar Okafor: badge 7986
+  - Iris Dunn: badge 7039
+  - Jon Nair: badge 3687
+  - Jon Grant: badge 2690
+  - Milo Jensen: badge 8561
+  - Ben Ibarra: badge 1514
+  - Tess Brandt: badge 6153
+  - Lena Mercer: badge 9938
+  - Omar Rossi: badge 8278
+  - Ben Quist: badge 5343
+  - Fay Okafor: badge 3291
+  - Cleo Ellis: badge 3065
+  - Lena Castillo: badge 6840
+  - Gil Kwon: badge 7888
+  - Cleo Grant: badge 9674
+  - Hugo Lund: badge 6689
+  - Cleo Tran: badge 7424
+  - Pia Abbott: badge 5879
+  - Lena Brandt: badge 3039
+  - Dev Quist: badge 3269
+  - Quinn Okafor: badge 9542
+
+  What is the current badge number of Kai Dunn?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '4196'
+answer_pattern: (?is)answer:\W*4196\W*\Z

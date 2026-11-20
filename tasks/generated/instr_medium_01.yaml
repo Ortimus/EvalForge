@@ -1,0 +1,17 @@
+task_id: instr_medium_01
+category: instruction_following
+difficulty: medium
+description: 4 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about the ocean. Follow every requirement:
+  - Finish with exactly this sentence: 'That is all.'
+  - Use at most 70 words.
+  - Use at least 35 words.
+  - Include the word 'because'.
+evaluation_type: checks
+checks:
+- ends_with: That is all.
+- max_words: 70
+- min_words: 35
+- contains:
+  - because

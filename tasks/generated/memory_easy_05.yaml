@@ -1,0 +1,19 @@
+task_id: memory_easy_05
+category: working_memory
+difficulty: easy
+description: Recall one badge number from 5 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Nora Jensen: badge 1296
+  - Nora Foster: badge 1667
+  - Hugo Jensen: badge 9214
+  - Ben Rossi: badge 7933
+  - Lena Foster: badge 4540
+
+  What is the current badge number of Hugo Jensen?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '9214'
+answer_pattern: (?is)answer:\W*9214\W*\Z

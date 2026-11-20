@@ -1,0 +1,19 @@
+task_id: memory_easy_02
+category: working_memory
+difficulty: easy
+description: Recall one badge number from 5 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Nora Price: badge 8857
+  - Ben Nair: badge 8520
+  - Lena Brandt: badge 8843
+  - Tess Quist: badge 7273
+  - Quinn Kwon: badge 5468
+
+  What is the current badge number of Nora Price?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '8857'
+answer_pattern: (?is)answer:\W*8857\W*\Z
