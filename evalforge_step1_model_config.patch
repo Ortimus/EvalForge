@@ -1,0 +1,263 @@
+diff --git a/README.md b/README.md
+index 11344ca..70e565d 100644
+--- a/README.md
++++ b/README.md
+@@ -85,7 +85,7 @@ Records identifying metadata for the run:
+ | Parameter | Example |
+ |---|---|
+ | `provider` | `anthropic` |
+-| `model_id` | `claude-sonnet-4-20250514` |
++| `model_id` | `claude-sonnet-5-5` |
+ | `version` | `unknown` |
+ | `task_set` | `default` |
+ 
+diff --git a/adapters/anthropic_adapter.py b/adapters/anthropic_adapter.py
+index 4f198f2..bab6280 100644
+--- a/adapters/anthropic_adapter.py
++++ b/adapters/anthropic_adapter.py
+@@ -7,7 +7,9 @@ from .base import BaseModelAdapter, ModelMetadata
+ 
+ class AnthropicAdapter(BaseModelAdapter):
+ 
+-    def __init__(self, model_id: str = "claude-sonnet-4-20250514", api_key: str | None = None):
++    def __init__(self, model_id: str, api_key: str | None = None):
++        # model_id is required: defaults live in configs/models.yaml and are
++        # resolved by adapters.factory.get_adapter().
+         self.model_id = model_id
+         self.client = anthropic.Anthropic(api_key=api_key)
+ 
+diff --git a/adapters/base.py b/adapters/base.py
+index 8ba3e39..8b16db3 100644
+--- a/adapters/base.py
++++ b/adapters/base.py
+@@ -9,7 +9,7 @@ from dataclasses import dataclass
+ @dataclass
+ class ModelMetadata:
+     provider: str          # e.g. "anthropic", "openai", "huggingface", "ollama"
+-    model_id: str          # e.g. "claude-sonnet-4-20250514"
++    model_id: str          # e.g. "claude-sonnet-5-5"
+     version: str = "unknown"
+     context_window: int = 0
+ 
+diff --git a/adapters/config.py b/adapters/config.py
+new file mode 100644
+index 0000000..fbd9672
+--- /dev/null
++++ b/adapters/config.py
+@@ -0,0 +1,36 @@
++"""
++Config loader — reads configs/models.yaml and configs/scoring.yaml.
++Kept dependency-free (just yaml + pathlib) so any layer can import it.
++"""
++from __future__ import annotations
++from functools import lru_cache
++from pathlib import Path
++import yaml
++
++CONFIGS_DIR = Path(__file__).parent.parent / "configs"
++
++
++@lru_cache(maxsize=None)
++def _load(name: str) -> dict:
++    return yaml.safe_load((CONFIGS_DIR / name).read_text()) or {}
++
++
++def provider_config(provider: str) -> dict:
++    """Return the config block for a provider ({} if the provider is unknown)."""
++    return _load("models.yaml").get("providers", {}).get(provider, {})
++
++
++def default_model(provider: str) -> str | None:
++    return provider_config(provider).get("default")
++
++
++def list_models() -> dict[str, list[str]]:
++    """provider -> known model IDs. Intended for UI dropdowns."""
++    return {
++        p: cfg.get("models", [])
++        for p, cfg in _load("models.yaml").get("providers", {}).items()
++    }
++
++
++def judge_config() -> dict:
++    return _load("scoring.yaml").get("judge", {})
+diff --git a/adapters/factory.py b/adapters/factory.py
+index 3d7412a..a17ac81 100644
+--- a/adapters/factory.py
++++ b/adapters/factory.py
+@@ -4,22 +4,36 @@ This is the single place in the codebase that knows about concrete adapter class
+ """
+ import os
+ from .base import BaseModelAdapter
++from .config import default_model
+ 
+ 
+-def get_adapter(provider: str, model_id: str, api_key: str | None = None) -> BaseModelAdapter:
++def get_adapter(
++    provider: str,
++    model_id: str | None = None,
++    api_key: str | None = None,
++) -> BaseModelAdapter:
+     """
+     Returns an instantiated adapter for the given provider.
+ 
+     Args:
+         provider:  "anthropic" | "openai" | "huggingface" | "ollama"
+-        model_id:  provider-specific model identifier
++        model_id:  provider-specific model identifier; if omitted, the provider's
++                   default from configs/models.yaml is used
+         api_key:   optional override; falls back to environment variables
+ 
+     Raises:
+-        ValueError: if provider is not recognised
++        ValueError: if provider is not recognised, or no model_id is given and
++                    the provider has no configured default
+     """
+     provider = provider.lower().strip()
+ 
++    model_id = model_id or default_model(provider)
++    if not model_id and provider in {"anthropic", "openai", "huggingface", "ollama"}:
++        raise ValueError(
++            f"No model_id given and provider '{provider}' has no default "
++            f"in configs/models.yaml"
++        )
++
+     if provider == "anthropic":
+         from .anthropic_adapter import AnthropicAdapter
+         return AnthropicAdapter(
+diff --git a/adapters/openai_adapter.py b/adapters/openai_adapter.py
+index a506b80..114619d 100644
+--- a/adapters/openai_adapter.py
++++ b/adapters/openai_adapter.py
+@@ -7,7 +7,9 @@ from .base import BaseModelAdapter, ModelMetadata
+ 
+ class OpenAIAdapter(BaseModelAdapter):
+ 
+-    def __init__(self, model_id: str = "gpt-4o", api_key: str | None = None):
++    def __init__(self, model_id: str, api_key: str | None = None):
++        # model_id is required: defaults live in configs/models.yaml and are
++        # resolved by adapters.factory.get_adapter().
+         self.model_id = model_id
+         self.client = OpenAI(api_key=api_key)
+ 
+diff --git a/api/routers/evaluate.py b/api/routers/evaluate.py
+index d968c55..e13e18e 100644
+--- a/api/routers/evaluate.py
++++ b/api/routers/evaluate.py
+@@ -21,7 +21,7 @@ tracker = EvalTracker()
+ 
+ class EvaluateRequest(BaseModel):
+     provider: str           # "anthropic" | "openai" | "huggingface" | "ollama"
+-    model_id: str
++    model_id: str | None = None   # omitted → provider default from configs/models.yaml
+     task_set: str = "default"
+     api_key: str | None = None
+ 
+diff --git a/configs/models.yaml b/configs/models.yaml
+index 37cb38b..4a6dfba 100644
+--- a/configs/models.yaml
++++ b/configs/models.yaml
+@@ -1,11 +1,29 @@
+-# Default model configurations for quick evaluation runs
+-defaults:
++# Model registry — single source of truth for provider defaults and known models.
++# Adapters, the judge, and (later) the Streamlit dropdowns all read from here.
++# To add a model: append it under its provider. No code changes needed.
++
++providers:
+   anthropic:
+-    model_id: claude-sonnet-4-20250514
++    default: claude-sonnet-5-5
+     max_tokens: 1024
++    models:
++      - claude-haiku-5-5
++      - claude-sonnet-5-5
++      - claude-opus-5-5
++      - claude-fable-5-2
++
+   openai:
+-    model_id: gpt-4o
++    default: gpt-4o            # TODO: verify against OpenAI's current model list
+     max_tokens: 1024
++    models:
++      - gpt-4o
++
+   ollama:
+-    model_id: llama3
++    default: llama3
+     base_url: http://localhost:11434
++    models:
++      - llama3
++
++  huggingface:
++    default: null              # no sensible default; model_id must be supplied
++    models: []
+diff --git a/configs/scoring.yaml b/configs/scoring.yaml
+index e71da06..0ee86fa 100644
+--- a/configs/scoring.yaml
++++ b/configs/scoring.yaml
+@@ -1,6 +1,10 @@
+ judge:
+-  model: claude-sonnet-4-20250514
++  # Ideally a different model family from the models under test, to reduce
++  # self-preference bias. Kept on Anthropic for now (only key configured).
++  provider: anthropic
++  model: claude-sonnet-5-5
+   temperature: 0.0          # deterministic judging
++  max_tokens: 512
+ 
+ thresholds:
+   pass_score: 3.0           # minimum LLM judge score to count as "pass"
+diff --git a/scoring/llm_judge.py b/scoring/llm_judge.py
+index 9192e33..e5d3a6b 100644
+--- a/scoring/llm_judge.py
++++ b/scoring/llm_judge.py
+@@ -5,6 +5,8 @@ Returns a 1-5 score plus the judge's rationale for auditability.
+ import anthropic
+ import os
+ 
++from adapters.config import judge_config
++
+ class LLMJudgeScorer:
+ 
+     SYSTEM_PROMPT = """You are a precise, consistent evaluation judge.
+@@ -17,11 +19,14 @@ Always respond in JSON with keys: score (int 1-5), rationale (str)."""
+     # the request cycle begins — which creates a timing race with load_dotenv().
+     # Reading from os.getenv() at instantiation time is always safe because
+     # by then load_dotenv() has already run in api/main.py.
+-    def __init__(self, judge_model: str = "claude-sonnet-4-20250514"):
++    def __init__(self, judge_model: str | None = None):
++        cfg = judge_config()
+         self.client = anthropic.Anthropic(
+             api_key=os.getenv("ANTHROPIC_API_KEY")   # ← explicit, not implicit
+         )
+-        self.judge_model = judge_model
++        self.judge_model = judge_model or cfg["model"]
++        self.temperature = cfg.get("temperature", 0.0)
++        self.max_tokens = cfg.get("max_tokens", 512)
+ 
+     def score(self, response: str, rubric: str, task_prompt: str = "") -> dict:
+         user_message = f"""
+@@ -38,7 +43,8 @@ Return only valid JSON.
+ """
+         message = self.client.messages.create(
+             model=self.judge_model,
+-            max_tokens=512,
++            max_tokens=self.max_tokens,
++            temperature=self.temperature,
+             system=self.SYSTEM_PROMPT,
+             messages=[{"role": "user", "content": user_message}],
+         )
+diff --git a/tests/smoke/smoke_api.py b/tests/smoke/smoke_api.py
+index 8052d92..10c95cb 100644
+--- a/tests/smoke/smoke_api.py
++++ b/tests/smoke/smoke_api.py
+@@ -51,7 +51,7 @@ print("  ✅ Passed")
+ print("\n[POST /evaluate]")
+ payload = {
+     "provider": "anthropic",
+-    "model_id": "claude-sonnet-4-20250514",
++    "model_id": "claude-sonnet-5-5",
+     "task_set": "default",
+ }
+ r = requests.post(f"{BASE}/evaluate/", json=payload)

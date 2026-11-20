@@ -7,7 +7,9 @@ from .base import BaseModelAdapter, ModelMetadata
 
 class OpenAIAdapter(BaseModelAdapter):
 
-    def __init__(self, model_id: str = "gpt-4o", api_key: str | None = None):
+    def __init__(self, model_id: str, api_key: str | None = None):
+        # model_id is required: defaults live in configs/models.yaml and are
+        # resolved by adapters.factory.get_adapter().
         self.model_id = model_id
         self.client = OpenAI(api_key=api_key)
 

@@ -7,7 +7,9 @@ from .base import BaseModelAdapter, ModelMetadata
 
 class AnthropicAdapter(BaseModelAdapter):
 
-    def __init__(self, model_id: str = "claude-sonnet-4-20250514", api_key: str | None = None):
+    def __init__(self, model_id: str, api_key: str | None = None):
+        # model_id is required: defaults live in configs/models.yaml and are
+        # resolved by adapters.factory.get_adapter().
         self.model_id = model_id
         self.client = anthropic.Anthropic(api_key=api_key)
 

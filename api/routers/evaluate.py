@@ -21,7 +21,7 @@ tracker = EvalTracker()
 
 class EvaluateRequest(BaseModel):
     provider: str           # "anthropic" | "openai" | "huggingface" | "ollama"
-    model_id: str
+    model_id: str | None = None   # omitted → provider default from configs/models.yaml
     task_set: str = "default"
     api_key: str | None = None
 

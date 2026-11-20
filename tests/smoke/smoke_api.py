@@ -51,7 +51,7 @@ print("  ✅ Passed")
 print("\n[POST /evaluate]")
 payload = {
     "provider": "anthropic",
-    "model_id": "claude-sonnet-4-20250514",
+    "model_id": "claude-sonnet-5-5",
     "task_set": "default",
 }
 r = requests.post(f"{BASE}/evaluate/", json=payload)

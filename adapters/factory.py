@@ -4,21 +4,35 @@ This is the single place in the codebase that knows about concrete adapter class
 """
 import os
 from .base import BaseModelAdapter
+from .config import default_model
 
 
-def get_adapter(provider: str, model_id: str, api_key: str | None = None) -> BaseModelAdapter:
+def get_adapter(
+    provider: str,
+    model_id: str | None = None,
+    api_key: str | None = None,
+) -> BaseModelAdapter:
     """
     Returns an instantiated adapter for the given provider.
 
     Args:
         provider:  "anthropic" | "openai" | "huggingface" | "ollama"
-        model_id:  provider-specific model identifier
+        model_id:  provider-specific model identifier; if omitted, the provider's
+                   default from configs/models.yaml is used
         api_key:   optional override; falls back to environment variables
 
     Raises:
-        ValueError: if provider is not recognised
+        ValueError: if provider is not recognised, or no model_id is given and
+                    the provider has no configured default
     """
     provider = provider.lower().strip()
+
+    model_id = model_id or default_model(provider)
+    if not model_id and provider in {"anthropic", "openai", "huggingface", "ollama"}:
+        raise ValueError(
+            f"No model_id given and provider '{provider}' has no default "
+            f"in configs/models.yaml"
+        )
 
     if provider == "anthropic":
         from .anthropic_adapter import AnthropicAdapter
