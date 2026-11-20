@@ -26,3 +26,7 @@ Thumbs.db
 .ui.pid
 logs/
 mlflow.db
+
+# patch/transfer artifacts
+*.patch
+*.mbox
