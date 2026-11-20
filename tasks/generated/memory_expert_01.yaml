@@ -1,0 +1,65 @@
+task_id: memory_expert_01
+category: working_memory
+difficulty: expert
+description: Track 40 records through 9 chained updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Ben Tran: badge 5601
+  - Hugo Foster: badge 7297
+  - Tess Okafor: badge 2181
+  - Tess Sato: badge 6805
+  - Dev Price: badge 4671
+  - Pia Tran: badge 6188
+  - Jon Jensen: badge 5194
+  - Ben Ibarra: badge 5863
+  - Pia Castillo: badge 1808
+  - Ben Jensen: badge 2336
+  - Rae Brandt: badge 9873
+  - Gil Brandt: badge 8075
+  - Tess Quist: badge 8640
+  - Ben Grant: badge 1521
+  - Milo Hayes: badge 5413
+  - Gil Foster: badge 8594
+  - Quinn Rossi: badge 6225
+  - Fay Jensen: badge 7959
+  - Jon Ibarra: badge 2995
+  - Fay Quist: badge 2223
+  - Cleo Quist: badge 7102
+  - Dev Rossi: badge 3857
+  - Sam Tran: badge 3041
+  - Pia Ibarra: badge 9675
+  - Kai Grant: badge 8487
+  - Rae Okafor: badge 3371
+  - Quinn Hayes: badge 1264
+  - Gil Ibarra: badge 8987
+  - Nora Dunn: badge 7069
+  - Tess Hayes: badge 4896
+  - Ada Sato: badge 9274
+  - Fay Hayes: badge 9516
+  - Jon Hayes: badge 2703
+  - Kai Ibarra: badge 7913
+  - Gil Tran: badge 5726
+  - Milo Lund: badge 2683
+  - Ben Sato: badge 6288
+  - Ada Ellis: badge 2807
+  - Nora Quist: badge 7430
+  - Lena Sato: badge 5779
+
+  The following changes happened in this order:
+  Swap: Rae Okafor and Sam Tran exchanged badge numbers.
+  Copy: Sam Tran now carries the same badge number that Tess Quist has at this moment.
+  Swap: Tess Quist and Jon Hayes exchanged badge numbers.
+  Copy: Ada Sato now carries the same badge number that Sam Tran has at this moment.
+  Copy: Jon Hayes now carries the same badge number that Ada Sato has at this moment.
+  Update: Sam Tran's badge was reissued; the new number is 1867.
+  Swap: Quinn Rossi and Gil Tran exchanged badge numbers.
+  Update: Dev Price's badge was reissued; the new number is 6835.
+  Update: Ada Sato's badge was reissued; the new number is 9947.
+
+  Apply every change in order. What is Ada Sato's badge number after all changes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '9947'
+answer_pattern: (?is)answer:\W*9947\W*\Z

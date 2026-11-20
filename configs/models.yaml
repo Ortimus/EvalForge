@@ -5,7 +5,9 @@
 providers:
   anthropic:
     default: claude-sonnet-5-5
-    max_tokens: 4096
+    # Output budget INCLUDING reasoning tokens: newer models think before answering,
+    # and a budget that is too small yields a thinking-only response (no answer).
+    max_tokens: 8192
     models:
       - claude-haiku-5-5
       - claude-sonnet-5-5

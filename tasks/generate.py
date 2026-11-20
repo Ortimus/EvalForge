@@ -30,6 +30,7 @@ import yaml
 OUT_DIR = Path(__file__).parent / "generated"
 SEED = 20261120
 TASKS_PER_TIER = 6
+EXPERT_TASKS_PER_CATEGORY = 6     # expert tier: logic, memory, instruction (no analogies)
 TIERS = ("easy", "medium", "hard")
 
 ANSWER_SUFFIX = (
@@ -300,8 +301,8 @@ ANALOGIES = [
     ("hard", "Cacophony : Harmony :: Scarcity : ___", ["abundance", "plenty", "surplus"]),
     ("hard", "Benevolent : Malevolent :: Frugal : ___", ["extravagant", "lavish", "wasteful", "profligate", "spendthrift"]),
     ("hard", "Ohm : Resistance :: Volt : ___", ["potential", "voltage", "electric potential", "potential difference"]),
-    ("hard", "Sonnet : Fourteen :: Haiku : ___", ["three", "3"]),
-    ("hard", "Osmosis : Water :: Diffusion : ___", ["particles", "molecules", "solute", "gas", "solutes"]),
+    ("hard", "Sonnet : Fourteen (lines) :: Haiku : ___ (lines)", ["three", "3"]),
+    ("hard", "Ampere : Current :: Hertz : ___", ["frequency"]),
     ("hard", "Prologue : Epilogue :: Overture : ___", ["finale", "coda"]),
 ]
 
@@ -326,6 +327,145 @@ def analogy_tasks() -> list[dict]:
 
 
 # --------------------------------------------------------------------------- #
+# EXPERT tier
+# Generated from a SEPARATE random stream (SEED + 1) so the easy/medium/hard tasks
+# above stay byte-identical when this tier changes. Every answer is unique and
+# machine-checkable; difficulty comes from interference and dependency, not length:
+#   logic        partial orders: count what is PROVABLY shorter (transitive closure)
+#   memory       ordered updates (reissue / swap / copy) that chain through state
+#   instruction  7 interacting constraints incl. a narrow word-count window
+# --------------------------------------------------------------------------- #
+def _closure_counts(n: int, edges: set[tuple[int, int]]) -> list[int]:
+    """edges (i, j): i is taller than j. Returns, per i, how many are provably shorter."""
+    below = [set() for _ in range(n)]
+    changed = True
+    while changed:
+        changed = False
+        for i, j in edges:
+            new = {j} | below[j]
+            if not new <= below[i]:
+                below[i] |= new
+                changed = True
+    return [len(b) for b in below]
+
+
+def logic_expert_task(rng: random.Random, idx: int) -> dict:
+    n = 12
+    people = rng.sample(LOGIC_NAMES, n)            # hidden truth: people[0] tallest
+    while True:
+        edges: set[tuple[int, int]] = set()
+        while len(edges) < 14:                     # fewer edges than a full chain needs plus extras
+            i = rng.randrange(n - 1)
+            edges.add((i, min(n - 1, i + rng.randint(1, 4))))
+        counts = _closure_counts(n, edges)
+        # a target whose answer differs from its true rank, so rank-guessing fails
+        cands = [i for i in range(n) if 3 <= counts[i] <= 7 and counts[i] != n - 1 - i]
+        if cands:
+            break
+    target = people[rng.choice(cands)]
+    answer = counts[people.index(target)]
+
+    stmts = []
+    for i, j in sorted(edges):
+        a, b = people[i], people[j]
+        stmts.append(f"{a} is taller than {b}." if rng.random() < 0.5 else f"{b} is shorter than {a}.")
+    age_order = rng.sample(people, n)
+    for _ in range(5):                             # distractors on another dimension
+        a, b = rng.sample(people, 2)
+        older, younger = sorted((a, b), key=age_order.index)
+        stmts.append(f"{older} is older than {younger}.")
+    rng.shuffle(stmts)
+
+    prompt = (
+        f"Consider these statements about {n} people.\n\n" + "\n".join(stmts)
+        + f"\n\nAssume only these statements are true. Counting only what is logically "
+          f"guaranteed, how many people are shorter than {target}? Answer with a number only."
+        + ANSWER_SUFFIX
+    )
+    return {
+        "task_id": f"logic_expert_{idx:02d}", "category": "logical_deduction", "difficulty": "expert",
+        "description": f"Count provably-shorter people in a partial order of {n}",
+        "prompt_template": prompt, "evaluation_type": "regex",
+        "expected_answer": str(answer), "answer_pattern": answer_regex(str(answer)),
+    }
+
+
+def memory_expert_task(rng: random.Random, idx: int) -> dict:
+    n, n_ops = 40, 9
+    while True:
+        names: list[str] = []
+        while len(names) < n:
+            name = f"{rng.choice(FIRST)} {rng.choice(LAST)}"
+            if name not in names:
+                names.append(name)
+        numbers = rng.sample(range(1000, 9999), n + n_ops)
+        records = dict(zip(names, numbers))
+        spare = iter(numbers[n:])
+        target = rng.choice(names)
+        hot = [target] + rng.sample([x for x in names if x != target], 5)
+
+        state, ops, touches = dict(records), [], 0
+        for _ in range(n_ops):
+            pool = hot if rng.random() < 0.75 else names
+            a, b = rng.sample(pool, 2)
+            kind = rng.choice(["reissue", "swap", "copy"])
+            if kind == "reissue":
+                num = next(spare)
+                state[a] = num
+                ops.append(f"Update: {a}'s badge was reissued; the new number is {num}.")
+                b = None
+            elif kind == "swap":
+                state[a], state[b] = state[b], state[a]
+                ops.append(f"Swap: {a} and {b} exchanged badge numbers.")
+            else:
+                state[b] = state[a]
+                ops.append(f"Copy: {b} now carries the same badge number that {a} has at this moment.")
+            touches += target in (a, b)
+        # the target must be in the middle of the action and end up changed
+        if touches >= 3 and state[target] != records[target]:
+            break
+
+    prompt = (
+        "Here is a staff directory of badge numbers.\n\n"
+        + "\n".join(f"- {nm}: badge {num}" for nm, num in records.items())
+        + "\n\nThe following changes happened in this order:\n" + "\n".join(ops)
+        + f"\n\nApply every change in order. What is {target}'s badge number after all changes?"
+        + ANSWER_SUFFIX
+    )
+    return {
+        "task_id": f"memory_expert_{idx:02d}", "category": "working_memory", "difficulty": "expert",
+        "description": f"Track {n} records through {n_ops} chained updates",
+        "prompt_template": prompt, "evaluation_type": "regex",
+        "expected_answer": str(state[target]), "answer_pattern": answer_regex(str(state[target])),
+    }
+
+
+def instruction_expert_task(rng: random.Random, idx: int) -> dict:
+    topic, pool = rng.choice(TOPICS)
+    min_w = rng.choice([40, 45, 50])
+    max_w = min_w + 10                              # narrow window: needs real word counting
+    n_sent = rng.choice([3, 4])
+    start = rng.choice(START_WORDS)
+    built = [
+        (f"Use at least {min_w} words.", {"min_words": min_w}),
+        (f"Use at most {max_w} words.", {"max_words": max_w}),
+        (f"Write exactly {n_sent} sentences.", {"num_sentences": n_sent}),
+        (f"Begin your response with the word '{start}'.", {"starts_with": start}),
+        (f"Finish with exactly this sentence: '{END_PHRASE}'", {"ends_with": END_PHRASE}),
+        (f"Do not use the words '{pool[0]}', '{pool[1]}' or '{pool[2]}'.", {"forbidden_words": list(pool)}),
+        ("Include the word 'because'.", {"contains": ["because"]}),
+    ]
+    rng.shuffle(built)
+    prompt = (f"Write a short piece about {topic}. Follow every requirement:\n"
+              + "\n".join(f"- {text}" for text, _ in built))
+    return {
+        "task_id": f"instr_expert_{idx:02d}", "category": "instruction_following", "difficulty": "expert",
+        "description": "7 interacting constraints with a 10-word window",
+        "prompt_template": prompt, "evaluation_type": "checks", "checks": [c for _, c in built],
+    }
+
+
+# --------------------------------------------------------------------------- #
 def main() -> None:
     rng = random.Random(SEED)
     if OUT_DIR.exists():
@@ -339,6 +479,12 @@ def main() -> None:
             tasks.append(memory_task(rng, tier, i))
             tasks.append(instruction_task(rng, tier, i))
     tasks.extend(analogy_tasks())
+
+    rng_x = random.Random(SEED + 1)         # separate stream: see EXPERT tier note
+    for i in range(1, EXPERT_TASKS_PER_CATEGORY + 1):
+        tasks.append(logic_expert_task(rng_x, i))
+        tasks.append(memory_expert_task(rng_x, i))
+        tasks.append(instruction_expert_task(rng_x, i))
 
     for task in tasks:
         write_task(task)

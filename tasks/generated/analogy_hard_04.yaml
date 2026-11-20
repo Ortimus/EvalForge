@@ -5,7 +5,7 @@ description: Complete the analogy
 prompt_template: |-
   Complete the analogy with a single word or short phrase.
 
-  Sonnet : Fourteen :: Haiku : ___
+  Sonnet : Fourteen (lines) :: Haiku : ___ (lines)
 
   Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
 evaluation_type: regex

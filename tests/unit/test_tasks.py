@@ -33,11 +33,16 @@ def test_task_ids_unique():
     assert len(ids) == len(set(ids))
 
 
-def test_every_category_has_every_tier():
+def test_every_category_has_every_base_tier():
     counts = Counter((t.category, t.difficulty) for t in TASKS)
     for cat in {t.category for t in TASKS}:
-        for tier in DIFFICULTIES:
+        for tier in ("easy", "medium", "hard"):
             assert counts[(cat, tier)] >= 1, f"{cat} has no {tier} task"
+
+
+def test_expert_tier_covers_the_checkable_categories():
+    cats = {t.category for t in TASKS if t.difficulty == "expert"}
+    assert cats == {"logical_deduction", "working_memory", "instruction_following"}
 
 
 @pytest.mark.parametrize("task", TASKS, ids=lambda t: t.task_id)
@@ -113,8 +118,8 @@ def _solve_logic(prompt: str) -> str:
 
 @pytest.mark.parametrize("task", by_category("logical_deduction"), ids=lambda t: t.task_id)
 def test_logic_answer_matches_independent_solver(task):
-    if not task.task_id.startswith("logic_"):
-        pytest.skip("hand-written legacy task")
+    if not task.task_id.startswith("logic_") or task.difficulty == "expert":
+        pytest.skip("legacy task, or expert (has its own solver)")
     assert _solve_logic(task.prompt_template) == task.expected_answer
 
 
@@ -126,7 +131,8 @@ def _solve_memory(prompt: str) -> str:
     return records[target]
 
 
-@pytest.mark.parametrize("task", [t for t in by_category("working_memory") if t.task_id.startswith("memory_")],
+@pytest.mark.parametrize("task", [t for t in by_category("working_memory")
+                          if t.task_id.startswith("memory_") and t.difficulty != "expert"],
                          ids=lambda t: t.task_id)
 def test_memory_answer_matches_independent_solver(task):
     assert _solve_memory(task.prompt_template) == task.expected_answer
@@ -227,3 +233,71 @@ def test_analogy_accepts_one_parenthetical_gloss_but_not_wrong_answers():
     assert ok("Answer: Current (potential)") == 0.0      # leading answer must match
     assert ok("Answer: potential (a) (b)") == 0.0         # only one gloss
     assert ok("Answer: potential\nAnswer: zzzz") == 0.0
+
+
+# --------------------------------------------------------------------------- #
+# expert tier: independent solvers
+# --------------------------------------------------------------------------- #
+def _expert(cat):
+    return [t for t in by_category(cat) if t.difficulty == "expert"]
+
+
+def _solve_logic_expert(prompt: str) -> str:
+    pairs = [(a, b) for a, b in re.findall(r"(\w+) is taller than (\w+)\.", prompt)]
+    pairs += [(a, b) for b, a in re.findall(r"(\w+) is shorter than (\w+)\.", prompt)]
+    target = re.search(r"are shorter than (\w+)\?", prompt).group(1)
+    shorter, frontier = set(), [target]            # BFS over "taller than" edges
+    while frontier:
+        cur = frontier.pop()
+        for a, b in pairs:
+            if a == cur and b not in shorter:
+                shorter.add(b)
+                frontier.append(b)
+    return str(len(shorter))
+
+
+@pytest.mark.parametrize("task", _expert("logical_deduction"), ids=lambda t: t.task_id)
+def test_logic_expert_matches_independent_solver(task):
+    assert _solve_logic_expert(task.prompt_template) == task.expected_answer
+    assert "Answer with a number only" in task.prompt_template
+
+
+NAME = r"[A-Z][a-z]+ [A-Z][a-z]+"
+
+
+def _solve_memory_expert(prompt: str) -> str:
+    state = dict(re.findall(rf"- ({NAME}): badge (\d+)", prompt))
+    target = re.search(rf"What is ({NAME})'s badge number after all changes\?", prompt).group(1)
+    for line in prompt.splitlines():
+        if m := re.fullmatch(rf"Update: ({NAME})'s badge was reissued; the new number is (\d+)\.", line):
+            state[m.group(1)] = m.group(2)
+        elif m := re.fullmatch(rf"Swap: ({NAME}) and ({NAME}) exchanged badge numbers\.", line):
+            a, b = m.groups()
+            state[a], state[b] = state[b], state[a]
+        elif m := re.fullmatch(rf"Copy: ({NAME}) now carries the same badge number that ({NAME}) has at this moment\.", line):
+            b, a = m.groups()
+            state[b] = state[a]
+    return state[target]
+
+
+@pytest.mark.parametrize("task", _expert("working_memory"), ids=lambda t: t.task_id)
+def test_memory_expert_matches_independent_solver(task):
+    assert _solve_memory_expert(task.prompt_template) == task.expected_answer
+    original = dict(re.findall(rf"- ({NAME}): badge (\d+)", task.prompt_template))
+    target = re.search(rf"What is ({NAME})'s badge", task.prompt_template).group(1)
+    assert task.expected_answer != original[target]        # the answer must have moved
+
+
+@pytest.mark.parametrize("task", _expert("instruction_following"), ids=lambda t: t.task_id)
+def test_instruction_expert_constraints_are_interacting_and_satisfiable(task):
+    kinds = {k for c in task.checks for k in c}
+    assert len(task.checks) == 7 and {"min_words", "max_words", "num_sentences"} <= kinds
+    spec = {k: v for c in task.checks for k, v in c.items()}
+    assert spec["max_words"] - spec["min_words"] == 10      # narrow window
+    result = SCORER.score_checks(_compliant_response(task.checks), task.checks)
+    assert result["all_passed"], result["failed"]
+
+
+def test_ambiguous_analogies_were_removed():
+    prompts = " ".join(t.prompt_template for t in by_category("analogical_reasoning"))
+    assert "Osmosis" not in prompts and "(lines)" in prompts

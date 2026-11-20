@@ -10,14 +10,14 @@ import yaml
 
 
 TASKS_DIR = Path(__file__).parent
-DIFFICULTIES = ("easy", "medium", "hard")
+DIFFICULTIES = ("easy", "medium", "hard", "expert")
 
 
 @dataclass
 class TaskConfig:
     task_id: str
     category: str
-    difficulty: str               # easy | medium | hard
+    difficulty: str               # easy | medium | hard | expert
     prompt_template: str
     evaluation_type: str          # exact_match | regex | checks | llm_judge
     description: str = ""

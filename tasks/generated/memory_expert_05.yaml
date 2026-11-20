@@ -1,0 +1,65 @@
+task_id: memory_expert_05
+category: working_memory
+difficulty: expert
+description: Track 40 records through 9 chained updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Tess Lund: badge 4066
+  - Eli Dunn: badge 7758
+  - Hugo Nair: badge 6674
+  - Gil Dunn: badge 5129
+  - Kai Lund: badge 4815
+  - Hugo Rossi: badge 1141
+  - Pia Hayes: badge 5225
+  - Quinn Nair: badge 3440
+  - Eli Castillo: badge 2514
+  - Iris Rossi: badge 3893
+  - Kai Tran: badge 4397
+  - Jon Mercer: badge 6758
+  - Quinn Quist: badge 5654
+  - Dev Lund: badge 7986
+  - Lena Hayes: badge 4472
+  - Hugo Okafor: badge 5421
+  - Iris Abbott: badge 3087
+  - Eli Price: badge 7191
+  - Rae Okafor: badge 2053
+  - Eli Tran: badge 1373
+  - Cleo Kwon: badge 3266
+  - Ben Lund: badge 2718
+  - Eli Quist: badge 2420
+  - Gil Grant: badge 5287
+  - Eli Sato: badge 5207
+  - Kai Sato: badge 7772
+  - Hugo Kwon: badge 9997
+  - Cleo Nair: badge 6780
+  - Hugo Foster: badge 1674
+  - Kai Rossi: badge 1171
+  - Iris Jensen: badge 2731
+  - Quinn Hayes: badge 2149
+  - Sam Ellis: badge 1252
+  - Jon Rossi: badge 3298
+  - Rae Foster: badge 5649
+  - Rae Brandt: badge 3592
+  - Jon Tran: badge 5675
+  - Kai Grant: badge 3366
+  - Quinn Castillo: badge 3164
+  - Tess Ibarra: badge 3017
+
+  The following changes happened in this order:
+  Swap: Iris Rossi and Eli Dunn exchanged badge numbers.
+  Update: Sam Ellis's badge was reissued; the new number is 6468.
+  Update: Eli Castillo's badge was reissued; the new number is 1969.
+  Swap: Eli Dunn and Iris Rossi exchanged badge numbers.
+  Update: Hugo Okafor's badge was reissued; the new number is 6809.
+  Swap: Eli Castillo and Eli Dunn exchanged badge numbers.
+  Swap: Eli Dunn and Eli Castillo exchanged badge numbers.
+  Copy: Eli Dunn now carries the same badge number that Eli Castillo has at this moment.
+  Swap: Eli Dunn and Hugo Okafor exchanged badge numbers.
+
+  Apply every change in order. What is Eli Dunn's badge number after all changes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '6809'
+answer_pattern: (?is)answer:\W*6809\W*\Z

@@ -1,0 +1,26 @@
+task_id: instr_expert_06
+category: instruction_following
+difficulty: expert
+description: 7 interacting constraints with a 10-word window
+prompt_template: |-
+  Write a short piece about riding a bicycle. Follow every requirement:
+  - Do not use the words 'wheel', 'pedal' or 'road'.
+  - Use at least 50 words.
+  - Include the word 'because'.
+  - Finish with exactly this sentence: 'That is all.'
+  - Use at most 60 words.
+  - Begin your response with the word 'Consider'.
+  - Write exactly 3 sentences.
+evaluation_type: checks
+checks:
+- forbidden_words:
+  - wheel
+  - pedal
+  - road
+- min_words: 50
+- contains:
+  - because
+- ends_with: That is all.
+- max_words: 60
+- starts_with: Consider
+- num_sentences: 3

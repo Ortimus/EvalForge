@@ -1,0 +1,33 @@
+task_id: logic_expert_01
+category: logical_deduction
+difficulty: expert
+description: Count provably-shorter people in a partial order of 12
+prompt_template: |-
+  Consider these statements about 12 people.
+
+  Alice is shorter than Kara.
+  Elio is shorter than Ivo.
+  Ivo is older than Kara.
+  Kara is shorter than Chen.
+  Hana is taller than Jun.
+  Jun is shorter than Alice.
+  Kara is taller than Jun.
+  Jun is older than Hana.
+  Farah is taller than Kara.
+  Alice is taller than Dara.
+  Elio is taller than Kara.
+  Bruno is shorter than Chen.
+  Leo is shorter than Farah.
+  Jun is taller than Gus.
+  Farah is shorter than Elio.
+  Leo is older than Dara.
+  Jun is older than Alice.
+  Elio is older than Hana.
+  Elio is taller than Bruno.
+
+  Assume only these statements are true. Counting only what is logically guaranteed, how many people are shorter than Farah? Answer with a number only.
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '6'
+answer_pattern: (?is)answer:\W*6\W*\Z

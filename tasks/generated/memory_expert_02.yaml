@@ -1,0 +1,65 @@
+task_id: memory_expert_02
+category: working_memory
+difficulty: expert
+description: Track 40 records through 9 chained updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Pia Okafor: badge 4002
+  - Cleo Quist: badge 9547
+  - Iris Ellis: badge 7894
+  - Iris Sato: badge 7180
+  - Pia Castillo: badge 9126
+  - Omar Foster: badge 7686
+  - Hugo Rossi: badge 2771
+  - Milo Ibarra: badge 6734
+  - Ben Grant: badge 3183
+  - Sam Sato: badge 9902
+  - Cleo Ibarra: badge 3429
+  - Quinn Brandt: badge 3924
+  - Ada Jensen: badge 8150
+  - Pia Ibarra: badge 8126
+  - Tess Ellis: badge 4585
+  - Fay Castillo: badge 5190
+  - Dev Ibarra: badge 5244
+  - Kai Hayes: badge 7982
+  - Kai Brandt: badge 2569
+  - Gil Hayes: badge 8807
+  - Dev Dunn: badge 4038
+  - Eli Dunn: badge 2902
+  - Milo Okafor: badge 3498
+  - Ben Price: badge 7481
+  - Milo Hayes: badge 8473
+  - Hugo Nair: badge 1301
+  - Kai Ibarra: badge 2658
+  - Quinn Quist: badge 8447
+  - Rae Ibarra: badge 7181
+  - Ben Lund: badge 8523
+  - Sam Okafor: badge 2539
+  - Iris Jensen: badge 4793
+  - Milo Abbott: badge 8739
+  - Gil Mercer: badge 3904
+  - Rae Price: badge 6248
+  - Pia Sato: badge 2559
+  - Gil Lund: badge 9599
+  - Cleo Price: badge 6230
+  - Pia Quist: badge 9733
+  - Sam Kwon: badge 3546
+
+  The following changes happened in this order:
+  Copy: Gil Lund now carries the same badge number that Kai Ibarra has at this moment.
+  Swap: Tess Ellis and Kai Ibarra exchanged badge numbers.
+  Copy: Hugo Rossi now carries the same badge number that Gil Lund has at this moment.
+  Swap: Tess Ellis and Hugo Nair exchanged badge numbers.
+  Copy: Hugo Rossi now carries the same badge number that Hugo Nair has at this moment.
+  Update: Kai Brandt's badge was reissued; the new number is 4396.
+  Copy: Gil Lund now carries the same badge number that Kai Brandt has at this moment.
+  Swap: Hugo Rossi and Hugo Nair exchanged badge numbers.
+  Update: Kai Ibarra's badge was reissued; the new number is 1200.
+
+  Apply every change in order. What is Hugo Rossi's badge number after all changes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '2658'
+answer_pattern: (?is)answer:\W*2658\W*\Z

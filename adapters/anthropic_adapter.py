@@ -2,6 +2,7 @@
 AnthropicAdapter — wraps the Anthropic Messages API.
 """
 import anthropic
+from .config import provider_config
 from .base import BaseModelAdapter, ModelMetadata
 
 
@@ -27,12 +28,13 @@ class AnthropicAdapter(BaseModelAdapter):
         # model_id is required: defaults live in configs/models.yaml and are
         # resolved by adapters.factory.get_adapter().
         self.model_id = model_id
+        self.max_tokens = provider_config("anthropic").get("max_tokens", 1024)
         self.client = anthropic.Anthropic(api_key=api_key)
 
-    def generate(self, prompt: str, max_tokens: int = 1024, **kwargs) -> str:
+    def generate(self, prompt: str, max_tokens: int | None = None, **kwargs) -> str:
         message = self.client.messages.create(
             model=self.model_id,
-            max_tokens=max_tokens,
+            max_tokens=max_tokens or self.max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
         return extract_text(message)

@@ -1,0 +1,26 @@
+task_id: instr_expert_05
+category: instruction_following
+difficulty: expert
+description: 7 interacting constraints with a 10-word window
+prompt_template: |-
+  Write a short piece about a quiet library. Follow every requirement:
+  - Include the word 'because'.
+  - Use at least 40 words.
+  - Finish with exactly this sentence: 'That is all.'
+  - Begin your response with the word 'Consider'.
+  - Write exactly 4 sentences.
+  - Use at most 50 words.
+  - Do not use the words 'book', 'books' or 'read'.
+evaluation_type: checks
+checks:
+- contains:
+  - because
+- min_words: 40
+- ends_with: That is all.
+- starts_with: Consider
+- num_sentences: 4
+- max_words: 50
+- forbidden_words:
+  - book
+  - books
+  - read

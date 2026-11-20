@@ -1,0 +1,26 @@
+task_id: instr_expert_01
+category: instruction_following
+difficulty: expert
+description: 7 interacting constraints with a 10-word window
+prompt_template: |-
+  Write a short piece about a rainy day. Follow every requirement:
+  - Use at least 45 words.
+  - Finish with exactly this sentence: 'That is all.'
+  - Write exactly 3 sentences.
+  - Begin your response with the word 'Often'.
+  - Use at most 55 words.
+  - Do not use the words 'rain', 'wet' or 'water'.
+  - Include the word 'because'.
+evaluation_type: checks
+checks:
+- min_words: 45
+- ends_with: That is all.
+- num_sentences: 3
+- starts_with: Often
+- max_words: 55
+- forbidden_words:
+  - rain
+  - wet
+  - water
+- contains:
+  - because
