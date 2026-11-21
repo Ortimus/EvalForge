@@ -20,10 +20,23 @@ Task Registry (YAML) → Model Adapter → Scoring Engine → MLflow → FastAPI
 
 ## Quick Start
 
+Two env files, because the same variable differs inside and outside Docker (both are gitignored):
+
+| File | Used by | `MLFLOW_TRACKING_URI` |
+|---|---|---|
+| `.env` | local runs (`scripts/`, pytest, uvicorn) | `sqlite:///mlflow.db` |
+| `.env.docker` | `docker compose` (api, ui) | `http://mlflow:5000` |
+
 ```bash
-cp .env.example .env          # add your API keys
-docker compose up --build     # starts mlflow + api + ui
+# First time only. -n never overwrites an existing file, so real keys are safe.
+cp -n .env.example .env
+cp -n .env.example .env.docker
+# Edit both: add ANTHROPIC_API_KEY, then set MLFLOW_TRACKING_URI as in the table.
+
+docker compose up --build     # postgres + mlflow + api + ui
 ```
+
+Wait for `api-1 | Application startup complete.` (MLflow installs on first start, ~1 min).
 
 - FastAPI docs: http://localhost:8000/docs
 - MLflow UI:    http://localhost:5001
