@@ -1,0 +1,65 @@
+task_id: memory_expert_04
+category: working_memory
+difficulty: expert
+description: Track 40 records through 9 chained updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Dev Quist: badge 8227
+  - Sam Ellis: badge 2172
+  - Pia Quist: badge 2593
+  - Tess Ibarra: badge 9069
+  - Hugo Sato: badge 9512
+  - Iris Quist: badge 3764
+  - Kai Hayes: badge 8502
+  - Nora Foster: badge 8099
+  - Iris Sato: badge 5500
+  - Hugo Nair: badge 3799
+  - Gil Nair: badge 9396
+  - Eli Sato: badge 7813
+  - Quinn Foster: badge 2874
+  - Fay Nair: badge 6572
+  - Hugo Quist: badge 5786
+  - Gil Ibarra: badge 4747
+  - Omar Castillo: badge 6053
+  - Fay Mercer: badge 1899
+  - Kai Sato: badge 2326
+  - Milo Rossi: badge 7467
+  - Nora Jensen: badge 1229
+  - Kai Castillo: badge 6442
+  - Lena Price: badge 1450
+  - Milo Hayes: badge 4649
+  - Kai Rossi: badge 4863
+  - Eli Grant: badge 8005
+  - Gil Tran: badge 7238
+  - Kai Ibarra: badge 9503
+  - Rae Abbott: badge 5150
+  - Ben Price: badge 3976
+  - Cleo Grant: badge 9589
+  - Eli Rossi: badge 6681
+  - Tess Grant: badge 9334
+  - Lena Abbott: badge 8165
+  - Iris Ibarra: badge 5404
+  - Omar Okafor: badge 9104
+  - Cleo Castillo: badge 2191
+  - Rae Grant: badge 3639
+  - Sam Brandt: badge 1977
+  - Dev Rossi: badge 6196
+
+  The following changes happened in this order:
+  Swap: Eli Grant and Kai Hayes exchanged badge numbers.
+  Update: Hugo Nair's badge was reissued; the new number is 3807.
+  Copy: Eli Grant now carries the same badge number that Kai Hayes has at this moment.
+  Update: Lena Price's badge was reissued; the new number is 9348.
+  Swap: Kai Sato and Hugo Nair exchanged badge numbers.
+  Update: Lena Price's badge was reissued; the new number is 9907.
+  Copy: Eli Grant now carries the same badge number that Hugo Nair has at this moment.
+  Swap: Kai Sato and Hugo Sato exchanged badge numbers.
+  Swap: Rae Grant and Eli Rossi exchanged badge numbers.
+
+  Apply every change in order. What is Hugo Nair's badge number after all changes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '2326'
+answer_pattern: (?is)answer:\W*2326\W*\Z

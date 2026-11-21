@@ -1,0 +1,19 @@
+task_id: logic_medium_03
+category: logical_deduction
+difficulty: medium
+description: Transitive height ordering over 6 people
+prompt_template: |-
+  Consider these statements about 6 people.
+
+  Hana is shorter than Ivo.
+  Chen is shorter than Alice.
+  Hana is taller than Jun.
+  Ivo is shorter than Elio.
+  Chen is taller than Elio.
+
+  Assume only these statements are true. Who is the shortest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Jun
+answer_pattern: (?is)answer:\W*Jun\W*\Z

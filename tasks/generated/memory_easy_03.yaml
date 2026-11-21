@@ -1,0 +1,19 @@
+task_id: memory_easy_03
+category: working_memory
+difficulty: easy
+description: Recall one badge number from 5 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Eli Abbott: badge 2281
+  - Ben Price: badge 1961
+  - Iris Abbott: badge 5504
+  - Iris Castillo: badge 7158
+  - Fay Abbott: badge 4959
+
+  What is the current badge number of Iris Abbott?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '5504'
+answer_pattern: (?is)answer:\W*5504\W*\Z

@@ -1,0 +1,26 @@
+task_id: logic_hard_01
+category: logical_deduction
+difficulty: hard
+description: Transitive height ordering over 10 people
+prompt_template: |-
+  Consider these statements about 10 people.
+
+  Hana is older than Leo.
+  Elio is taller than Leo.
+  Gus is shorter than Hana.
+  Jun is shorter than Alice.
+  Dara is older than Jun.
+  Farah is shorter than Chen.
+  Leo is taller than Dara.
+  Kara is taller than Hana.
+  Alice is shorter than Gus.
+  Hana is older than Kara.
+  Jun is taller than Chen.
+  Farah is taller than Elio.
+
+  Assume only these statements are true. Who is the sixth tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Chen
+answer_pattern: (?is)answer:\W*Chen\W*\Z

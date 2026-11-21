@@ -1,0 +1,12 @@
+task_id: instr_easy_03
+category: instruction_following
+difficulty: easy
+description: 2 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about the ocean. Follow every requirement:
+  - Use at least 25 words.
+  - Finish with exactly this sentence: 'That is all.'
+evaluation_type: checks
+checks:
+- min_words: 25
+- ends_with: That is all.

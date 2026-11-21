@@ -1,0 +1,77 @@
+task_id: memory_hard_04
+category: working_memory
+difficulty: hard
+description: Recall one badge number from 60 records with in-place updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Gil Grant: badge 3404
+  - Cleo Hayes: badge 1870
+  - Lena Brandt: badge 4218
+  - Pia Rossi: badge 8417
+  - Tess Castillo: badge 5773
+  - Ada Price: badge 1372
+  - Nora Jensen: badge 6272
+  - Ada Mercer: badge 5670
+  - Tess Sato: badge 8189
+  - Ben Sato: badge 7520
+  - Rae Tran: badge 5554
+  - Ada Okafor: badge 5056
+  - Omar Rossi: badge 4601
+  - Jon Quist: badge 4051
+  - Dev Ellis: badge 2537
+  - Pia Sato: badge 6005
+  - Ben Grant: badge 8872
+  - Jon Brandt: badge 9824
+  - Cleo Foster: badge 8414
+  - Fay Okafor: badge 6760
+  - Tess Dunn: badge 8209
+  - Quinn Abbott: badge 8090
+  - Ben Castillo: badge 2855
+  - Milo Mercer: badge 9598
+  - Ben Foster: badge 8288
+  - Omar Mercer: badge 6040
+  - Ada Quist: badge 2293
+  - Tess Quist: badge 8153
+  - Lena Lund: badge 4948
+  - Dev Quist: badge 9174
+  - Tess Mercer: badge 3958
+  - Sam Okafor: badge 5584
+  - Rae Okafor: badge 8800
+  - Tess Tran: badge 9108
+  - Iris Castillo: badge 4976
+  - Dev Kwon: badge 2750
+  - Ada Kwon: badge 5111
+  - Omar Ellis: badge 6361
+  - Ben Tran: badge 3678
+  - Omar Nair: badge 9802
+  - Hugo Lund: badge 1559
+  - Dev Grant: badge 4299
+  - Kai Mercer: badge 3796
+  - Kai Nair: badge 6137
+  - Cleo Rossi: badge 9940
+  - Lena Abbott: badge 1475
+  - Iris Ibarra: badge 6277
+  - Quinn Sato: badge 6801
+  - Rae Grant: badge 5858
+  - Dev Rossi: badge 5520
+  - Lena Castillo: badge 2365
+  - Lena Ellis: badge 8955
+  - Quinn Castillo: badge 1548
+  - Milo Rossi: badge 9955
+  - Iris Hayes: badge 2591
+  - Fay Tran: badge 7548
+  - Sam Ellis: badge 7615
+  - Lena Rossi: badge 2546
+  - Dev Ibarra: badge 4974
+  - Quinn Okafor: badge 4604
+
+  Update: Dev Ellis's badge was reissued; the new number is 6459.
+  Update: Rae Tran's badge was reissued; the new number is 1534.
+
+  What is the current badge number of Dev Ellis?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '6459'
+answer_pattern: (?is)answer:\W*6459\W*\Z

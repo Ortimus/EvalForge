@@ -1,0 +1,77 @@
+task_id: memory_hard_06
+category: working_memory
+difficulty: hard
+description: Recall one badge number from 60 records with in-place updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Cleo Jensen: badge 3252
+  - Hugo Quist: badge 9765
+  - Tess Castillo: badge 3054
+  - Quinn Ibarra: badge 8354
+  - Omar Ellis: badge 8362
+  - Tess Hayes: badge 4898
+  - Quinn Lund: badge 9172
+  - Quinn Quist: badge 8462
+  - Ada Ellis: badge 2687
+  - Iris Nair: badge 6298
+  - Ada Ibarra: badge 9813
+  - Rae Nair: badge 5442
+  - Gil Ellis: badge 9604
+  - Milo Ellis: badge 9502
+  - Pia Mercer: badge 1554
+  - Dev Foster: badge 3843
+  - Quinn Kwon: badge 1977
+  - Sam Nair: badge 3746
+  - Quinn Sato: badge 4657
+  - Milo Lund: badge 7146
+  - Sam Grant: badge 1803
+  - Tess Price: badge 7893
+  - Eli Ellis: badge 7379
+  - Lena Lund: badge 1637
+  - Nora Okafor: badge 7380
+  - Sam Lund: badge 5897
+  - Hugo Lund: badge 9637
+  - Cleo Price: badge 6984
+  - Pia Abbott: badge 5506
+  - Ada Tran: badge 6178
+  - Omar Tran: badge 9421
+  - Iris Ibarra: badge 2666
+  - Jon Abbott: badge 3725
+  - Jon Kwon: badge 5785
+  - Eli Hayes: badge 9266
+  - Fay Rossi: badge 9078
+  - Hugo Nair: badge 5232
+  - Nora Ibarra: badge 3422
+  - Rae Foster: badge 1616
+  - Milo Foster: badge 4785
+  - Pia Sato: badge 3465
+  - Dev Hayes: badge 4535
+  - Hugo Mercer: badge 1843
+  - Rae Sato: badge 2844
+  - Ada Rossi: badge 4902
+  - Jon Castillo: badge 8124
+  - Sam Hayes: badge 3868
+  - Tess Abbott: badge 5488
+  - Dev Jensen: badge 4347
+  - Hugo Jensen: badge 3481
+  - Cleo Lund: badge 4208
+  - Kai Ibarra: badge 7547
+  - Quinn Rossi: badge 9143
+  - Sam Sato: badge 9445
+  - Nora Nair: badge 8483
+  - Kai Ellis: badge 4278
+  - Quinn Tran: badge 4087
+  - Dev Ellis: badge 7369
+  - Nora Dunn: badge 7061
+  - Milo Kwon: badge 6257
+
+  Update: Dev Jensen's badge was reissued; the new number is 6917.
+  Update: Tess Price's badge was reissued; the new number is 5110.
+
+  What is the current badge number of Dev Jensen?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '6917'
+answer_pattern: (?is)answer:\W*6917\W*\Z

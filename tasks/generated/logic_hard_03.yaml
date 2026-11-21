@@ -1,0 +1,26 @@
+task_id: logic_hard_03
+category: logical_deduction
+difficulty: hard
+description: Transitive height ordering over 10 people
+prompt_template: |-
+  Consider these statements about 10 people.
+
+  Bruno is taller than Dara.
+  Gus is taller than Alice.
+  Jun is shorter than Ivo.
+  Ivo is shorter than Kara.
+  Elio is shorter than Leo.
+  Leo is shorter than Dara.
+  Elio is older than Dara.
+  Elio is older than Ivo.
+  Elio is older than Bruno.
+  Hana is taller than Kara.
+  Elio is taller than Hana.
+  Bruno is shorter than Alice.
+
+  Assume only these statements are true. Who is the seventh tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Hana
+answer_pattern: (?is)answer:\W*Hana\W*\Z

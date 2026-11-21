@@ -1,0 +1,16 @@
+task_id: instr_medium_04
+category: instruction_following
+difficulty: medium
+description: 4 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about riding a bicycle. Follow every requirement:
+  - Use at most 90 words.
+  - Write exactly 2 sentences.
+  - Use at least 35 words.
+  - Begin your response with the word 'Consider'.
+evaluation_type: checks
+checks:
+- max_words: 90
+- num_sentences: 2
+- min_words: 35
+- starts_with: Consider

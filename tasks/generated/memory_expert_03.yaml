@@ -1,0 +1,65 @@
+task_id: memory_expert_03
+category: working_memory
+difficulty: expert
+description: Track 40 records through 9 chained updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Fay Hayes: badge 6067
+  - Quinn Ellis: badge 9779
+  - Tess Castillo: badge 1620
+  - Tess Brandt: badge 7205
+  - Jon Hayes: badge 1994
+  - Milo Hayes: badge 5910
+  - Iris Quist: badge 6968
+  - Hugo Grant: badge 3756
+  - Omar Abbott: badge 2498
+  - Pia Ibarra: badge 7588
+  - Quinn Kwon: badge 8070
+  - Kai Dunn: badge 6630
+  - Milo Lund: badge 9882
+  - Dev Jensen: badge 8350
+  - Sam Dunn: badge 5986
+  - Iris Grant: badge 1677
+  - Hugo Rossi: badge 3194
+  - Cleo Okafor: badge 2746
+  - Kai Kwon: badge 7694
+  - Ada Mercer: badge 9003
+  - Gil Sato: badge 9023
+  - Cleo Grant: badge 3578
+  - Kai Jensen: badge 2903
+  - Kai Tran: badge 3633
+  - Fay Tran: badge 6246
+  - Hugo Okafor: badge 2523
+  - Kai Rossi: badge 8214
+  - Eli Sato: badge 3316
+  - Gil Dunn: badge 8913
+  - Iris Lund: badge 1898
+  - Iris Abbott: badge 8166
+  - Tess Quist: badge 3556
+  - Tess Ibarra: badge 5599
+  - Kai Quist: badge 1823
+  - Lena Price: badge 4553
+  - Rae Grant: badge 7756
+  - Tess Rossi: badge 3216
+  - Milo Jensen: badge 9516
+  - Ben Hayes: badge 1856
+  - Hugo Kwon: badge 3864
+
+  The following changes happened in this order:
+  Swap: Ada Mercer and Lena Price exchanged badge numbers.
+  Swap: Kai Quist and Jon Hayes exchanged badge numbers.
+  Copy: Kai Kwon now carries the same badge number that Cleo Grant has at this moment.
+  Update: Dev Jensen's badge was reissued; the new number is 4921.
+  Swap: Quinn Kwon and Dev Jensen exchanged badge numbers.
+  Swap: Ada Mercer and Kai Quist exchanged badge numbers.
+  Copy: Dev Jensen now carries the same badge number that Quinn Kwon has at this moment.
+  Swap: Ada Mercer and Dev Jensen exchanged badge numbers.
+  Swap: Rae Grant and Quinn Kwon exchanged badge numbers.
+
+  Apply every change in order. What is Dev Jensen's badge number after all changes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '1994'
+answer_pattern: (?is)answer:\W*1994\W*\Z

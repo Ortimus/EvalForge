@@ -1,0 +1,17 @@
+task_id: instr_medium_06
+category: instruction_following
+difficulty: medium
+description: 4 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about the ocean. Follow every requirement:
+  - Begin your response with the word 'Consider'.
+  - Write exactly 2 sentences.
+  - Include the word 'because'.
+  - Finish with exactly this sentence: 'That is all.'
+evaluation_type: checks
+checks:
+- starts_with: Consider
+- num_sentences: 2
+- contains:
+  - because
+- ends_with: That is all.

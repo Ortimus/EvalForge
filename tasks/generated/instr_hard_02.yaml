@@ -1,0 +1,23 @@
+task_id: instr_hard_02
+category: instruction_following
+difficulty: hard
+description: 6 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a mountain hike. Follow every requirement:
+  - Write entirely in lowercase letters.
+  - Use at least 25 words.
+  - Do not use the words 'mountain' or 'trail'.
+  - Use at most 70 words.
+  - Write exactly 2 sentences.
+  - Include the word 'because'.
+evaluation_type: checks
+checks:
+- all_lowercase: true
+- min_words: 25
+- forbidden_words:
+  - mountain
+  - trail
+- max_words: 70
+- num_sentences: 2
+- contains:
+  - because

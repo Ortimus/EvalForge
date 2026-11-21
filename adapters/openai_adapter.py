@@ -2,19 +2,23 @@
 OpenAIAdapter — wraps the OpenAI Chat Completions API.
 """
 from openai import OpenAI
+from .config import provider_config
 from .base import BaseModelAdapter, ModelMetadata
 
 
 class OpenAIAdapter(BaseModelAdapter):
 
-    def __init__(self, model_id: str = "gpt-4o", api_key: str | None = None):
+    def __init__(self, model_id: str, api_key: str | None = None):
+        # model_id is required: defaults live in configs/models.yaml and are
+        # resolved by adapters.factory.get_adapter().
         self.model_id = model_id
+        self.max_tokens = provider_config("openai").get("max_tokens", 1024)
         self.client = OpenAI(api_key=api_key)
 
-    def generate(self, prompt: str, max_tokens: int = 1024, **kwargs) -> str:
+    def generate(self, prompt: str, max_tokens: int | None = None, **kwargs) -> str:
         response = self.client.chat.completions.create(
             model=self.model_id,
-            max_tokens=max_tokens,
+            max_tokens=max_tokens or self.max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
         return response.choices[0].message.content

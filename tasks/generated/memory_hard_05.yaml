@@ -1,0 +1,76 @@
+task_id: memory_hard_05
+category: working_memory
+difficulty: hard
+description: Recall one badge number from 60 records with in-place updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Lena Castillo: badge 8078
+  - Iris Ellis: badge 8573
+  - Ben Brandt: badge 2741
+  - Ada Grant: badge 1494
+  - Ben Hayes: badge 7051
+  - Cleo Nair: badge 1190
+  - Quinn Mercer: badge 4584
+  - Rae Nair: badge 8979
+  - Ada Dunn: badge 9398
+  - Eli Abbott: badge 9321
+  - Ben Nair: badge 6952
+  - Rae Lund: badge 9013
+  - Hugo Okafor: badge 7919
+  - Jon Ibarra: badge 4520
+  - Quinn Grant: badge 6954
+  - Kai Hayes: badge 9923
+  - Ada Okafor: badge 3038
+  - Ada Kwon: badge 7846
+  - Dev Price: badge 4034
+  - Ada Foster: badge 8941
+  - Iris Jensen: badge 3250
+  - Cleo Okafor: badge 1591
+  - Omar Okafor: badge 7392
+  - Jon Tran: badge 6503
+  - Ada Rossi: badge 2484
+  - Nora Castillo: badge 3088
+  - Tess Sato: badge 7410
+  - Cleo Lund: badge 4440
+  - Kai Lund: badge 1335
+  - Dev Castillo: badge 2456
+  - Pia Tran: badge 8491
+  - Fay Ibarra: badge 2060
+  - Nora Mercer: badge 3428
+  - Sam Ibarra: badge 3510
+  - Ada Ellis: badge 4839
+  - Cleo Ellis: badge 3177
+  - Iris Grant: badge 2918
+  - Pia Grant: badge 3772
+  - Kai Brandt: badge 3047
+  - Rae Tran: badge 9528
+  - Milo Dunn: badge 5079
+  - Milo Foster: badge 6414
+  - Omar Grant: badge 7152
+  - Rae Jensen: badge 5512
+  - Gil Foster: badge 5466
+  - Sam Price: badge 1978
+  - Lena Tran: badge 8285
+  - Fay Grant: badge 9354
+  - Rae Ibarra: badge 6419
+  - Fay Nair: badge 6284
+  - Pia Mercer: badge 4750
+  - Iris Sato: badge 8294
+  - Nora Okafor: badge 7842
+  - Omar Foster: badge 5701
+  - Nora Abbott: badge 6133
+  - Tess Castillo: badge 5367
+  - Rae Abbott: badge 5876
+  - Lena Nair: badge 1052
+  - Tess Nair: badge 4555
+  - Sam Mercer: badge 2960
+
+  Update: Sam Mercer's badge was reissued; the new number is 4434.
+
+  What is the current badge number of Sam Ibarra?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '3510'
+answer_pattern: (?is)answer:\W*3510\W*\Z

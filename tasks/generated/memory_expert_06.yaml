@@ -1,0 +1,65 @@
+task_id: memory_expert_06
+category: working_memory
+difficulty: expert
+description: Track 40 records through 9 chained updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Ada Ibarra: badge 3637
+  - Kai Nair: badge 2699
+  - Sam Mercer: badge 8702
+  - Gil Lund: badge 4657
+  - Milo Price: badge 5772
+  - Hugo Nair: badge 3685
+  - Ben Quist: badge 6062
+  - Rae Sato: badge 5068
+  - Fay Mercer: badge 8896
+  - Cleo Sato: badge 7374
+  - Sam Sato: badge 2320
+  - Sam Tran: badge 2475
+  - Sam Jensen: badge 2515
+  - Omar Abbott: badge 9457
+  - Omar Grant: badge 6221
+  - Dev Tran: badge 8922
+  - Milo Okafor: badge 8977
+  - Ada Jensen: badge 1454
+  - Cleo Ellis: badge 9221
+  - Tess Foster: badge 6090
+  - Lena Dunn: badge 7605
+  - Nora Grant: badge 6297
+  - Kai Lund: badge 1830
+  - Lena Nair: badge 4273
+  - Pia Rossi: badge 6906
+  - Eli Castillo: badge 6201
+  - Fay Okafor: badge 8074
+  - Ada Abbott: badge 3610
+  - Hugo Quist: badge 3406
+  - Omar Hayes: badge 2692
+  - Kai Hayes: badge 7775
+  - Quinn Tran: badge 8512
+  - Quinn Foster: badge 6148
+  - Milo Nair: badge 5169
+  - Milo Ellis: badge 1690
+  - Ben Mercer: badge 8900
+  - Rae Castillo: badge 6262
+  - Rae Ellis: badge 8233
+  - Tess Dunn: badge 1396
+  - Kai Quist: badge 6273
+
+  The following changes happened in this order:
+  Swap: Kai Nair and Fay Mercer exchanged badge numbers.
+  Copy: Cleo Sato now carries the same badge number that Kai Quist has at this moment.
+  Swap: Lena Dunn and Fay Okafor exchanged badge numbers.
+  Update: Lena Dunn's badge was reissued; the new number is 2012.
+  Update: Lena Dunn's badge was reissued; the new number is 1717.
+  Update: Quinn Tran's badge was reissued; the new number is 1952.
+  Update: Ada Ibarra's badge was reissued; the new number is 1689.
+  Swap: Fay Okafor and Quinn Tran exchanged badge numbers.
+  Swap: Quinn Tran and Kai Nair exchanged badge numbers.
+
+  Apply every change in order. What is Lena Dunn's badge number after all changes?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '1717'
+answer_pattern: (?is)answer:\W*1717\W*\Z

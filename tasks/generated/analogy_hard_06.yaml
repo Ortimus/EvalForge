@@ -1,0 +1,13 @@
+task_id: analogy_hard_06
+category: analogical_reasoning
+difficulty: hard
+description: Complete the analogy
+prompt_template: |-
+  Complete the analogy with a single word or short phrase.
+
+  Prologue : Epilogue :: Overture : ___
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: finale
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:finale|coda)(?:\s*\([^)\n]*\))?\W*\Z

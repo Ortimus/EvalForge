@@ -1,6 +1,9 @@
 judge:
-  model: claude-sonnet-4-20250514
-  temperature: 0.0          # deterministic judging
+  # Ideally a different model family from the models under test, to reduce
+  # self-preference bias. Kept on Anthropic for now (only key configured).
+  provider: anthropic
+  model: claude-sonnet-5-5
+  max_tokens: 512
 
 thresholds:
   pass_score: 3.0           # minimum LLM judge score to count as "pass"

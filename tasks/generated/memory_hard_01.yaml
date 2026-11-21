@@ -1,0 +1,76 @@
+task_id: memory_hard_01
+category: working_memory
+difficulty: hard
+description: Recall one badge number from 60 records with in-place updates
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Ada Quist: badge 8846
+  - Quinn Lund: badge 9464
+  - Rae Ellis: badge 3814
+  - Kai Grant: badge 7581
+  - Sam Mercer: badge 6037
+  - Gil Brandt: badge 8243
+  - Sam Dunn: badge 8161
+  - Hugo Ibarra: badge 8985
+  - Nora Hayes: badge 3102
+  - Gil Ellis: badge 5253
+  - Pia Tran: badge 4916
+  - Rae Kwon: badge 9029
+  - Jon Hayes: badge 3672
+  - Kai Rossi: badge 2059
+  - Jon Lund: badge 5346
+  - Eli Nair: badge 8420
+  - Lena Hayes: badge 1733
+  - Lena Okafor: badge 1191
+  - Omar Rossi: badge 9781
+  - Hugo Rossi: badge 7897
+  - Tess Rossi: badge 3306
+  - Lena Kwon: badge 1055
+  - Rae Brandt: badge 3726
+  - Ada Mercer: badge 1118
+  - Dev Castillo: badge 1296
+  - Milo Grant: badge 5845
+  - Nora Grant: badge 4530
+  - Cleo Rossi: badge 1790
+  - Kai Jensen: badge 8832
+  - Pia Lund: badge 5834
+  - Ada Castillo: badge 9419
+  - Eli Hayes: badge 4963
+  - Omar Dunn: badge 1758
+  - Ben Abbott: badge 1860
+  - Hugo Quist: badge 7538
+  - Jon Nair: badge 2210
+  - Fay Okafor: badge 9363
+  - Eli Tran: badge 2068
+  - Ben Brandt: badge 2359
+  - Lena Rossi: badge 9531
+  - Lena Ibarra: badge 3747
+  - Gil Abbott: badge 7484
+  - Tess Tran: badge 2734
+  - Milo Mercer: badge 2092
+  - Tess Ibarra: badge 2987
+  - Omar Kwon: badge 7434
+  - Fay Rossi: badge 6501
+  - Gil Hayes: badge 5080
+  - Ben Castillo: badge 6630
+  - Kai Mercer: badge 2868
+  - Ada Brandt: badge 4577
+  - Nora Ibarra: badge 9527
+  - Jon Brandt: badge 4080
+  - Jon Grant: badge 9133
+  - Quinn Rossi: badge 4636
+  - Pia Ibarra: badge 8731
+  - Cleo Grant: badge 5430
+  - Gil Sato: badge 1012
+  - Sam Rossi: badge 4660
+  - Hugo Tran: badge 1932
+
+  Update: Omar Dunn's badge was reissued; the new number is 6861.
+
+  What is the current badge number of Nora Ibarra?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '9527'
+answer_pattern: (?is)answer:\W*9527\W*\Z

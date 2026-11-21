@@ -1,0 +1,23 @@
+task_id: instr_hard_05
+category: instruction_following
+difficulty: hard
+description: 6 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about riding a bicycle. Follow every requirement:
+  - Finish with exactly this sentence: 'That is all.'
+  - Do not use the words 'road' or 'pedal'.
+  - Begin your response with the word 'Often'.
+  - Use at least 35 words.
+  - Write exactly 4 sentences.
+  - Include the word 'because'.
+evaluation_type: checks
+checks:
+- ends_with: That is all.
+- forbidden_words:
+  - road
+  - pedal
+- starts_with: Often
+- min_words: 35
+- num_sentences: 4
+- contains:
+  - because

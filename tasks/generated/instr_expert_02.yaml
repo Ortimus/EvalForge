@@ -1,0 +1,26 @@
+task_id: instr_expert_02
+category: instruction_following
+difficulty: expert
+description: 7 interacting constraints with a 10-word window
+prompt_template: |-
+  Write a short piece about a rainy day. Follow every requirement:
+  - Use at least 50 words.
+  - Begin your response with the word 'Consider'.
+  - Include the word 'because'.
+  - Use at most 60 words.
+  - Do not use the words 'rain', 'wet' or 'water'.
+  - Write exactly 4 sentences.
+  - Finish with exactly this sentence: 'That is all.'
+evaluation_type: checks
+checks:
+- min_words: 50
+- starts_with: Consider
+- contains:
+  - because
+- max_words: 60
+- forbidden_words:
+  - rain
+  - wet
+  - water
+- num_sentences: 4
+- ends_with: That is all.

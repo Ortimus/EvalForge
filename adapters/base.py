@@ -9,7 +9,7 @@ from dataclasses import dataclass
 @dataclass
 class ModelMetadata:
     provider: str          # e.g. "anthropic", "openai", "huggingface", "ollama"
-    model_id: str          # e.g. "claude-sonnet-4-20250514"
+    model_id: str          # e.g. "claude-sonnet-5-5"
     version: str = "unknown"
     context_window: int = 0
 

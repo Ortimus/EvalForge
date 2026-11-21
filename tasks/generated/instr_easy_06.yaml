@@ -1,0 +1,12 @@
+task_id: instr_easy_06
+category: instruction_following
+difficulty: easy
+description: 2 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about a mountain hike. Follow every requirement:
+  - Begin your response with the word 'Often'.
+  - Write exactly 2 sentences.
+evaluation_type: checks
+checks:
+- starts_with: Often
+- num_sentences: 2

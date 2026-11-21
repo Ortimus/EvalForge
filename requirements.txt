@@ -4,11 +4,11 @@ uvicorn[standard]>=0.29.0
 pydantic>=2.7.0
 
 # ML & tracking
-mlflow>=2.13.0
+mlflow==3.11.1
 scikit-learn>=1.4.0
 
 # Model providers
-anthropic>=0.28.0
+anthropic>=0.60.0
 openai>=1.30.0
 transformers>=4.41.0
 torch>=2.3.0

@@ -1,0 +1,19 @@
+task_id: logic_medium_05
+category: logical_deduction
+difficulty: medium
+description: Transitive height ordering over 6 people
+prompt_template: |-
+  Consider these statements about 6 people.
+
+  Jun is taller than Hana.
+  Alice is shorter than Elio.
+  Farah is taller than Jun.
+  Farah is shorter than Dara.
+  Hana is taller than Elio.
+
+  Assume only these statements are true. Who is the tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Dara
+answer_pattern: (?is)answer:\W*Dara\W*\Z

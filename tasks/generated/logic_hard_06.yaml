@@ -1,0 +1,26 @@
+task_id: logic_hard_06
+category: logical_deduction
+difficulty: hard
+description: Transitive height ordering over 10 people
+prompt_template: |-
+  Consider these statements about 10 people.
+
+  Bruno is older than Leo.
+  Chen is taller than Elio.
+  Alice is taller than Bruno.
+  Alice is older than Hana.
+  Kara is shorter than Dara.
+  Hana is shorter than Bruno.
+  Alice is shorter than Leo.
+  Chen is shorter than Hana.
+  Dara is shorter than Gus.
+  Gus is shorter than Jun.
+  Dara is older than Chen.
+  Elio is taller than Jun.
+
+  Assume only these statements are true. Who is the third tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Bruno
+answer_pattern: (?is)answer:\W*Bruno\W*\Z

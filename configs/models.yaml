@@ -1,11 +1,31 @@
-# Default model configurations for quick evaluation runs
-defaults:
+# Model registry — single source of truth for provider defaults and known models.
+# Adapters, the judge, and (later) the Streamlit dropdowns all read from here.
+# To add a model: append it under its provider. No code changes needed.
+
+providers:
   anthropic:
-    model_id: claude-sonnet-4-20250514
-    max_tokens: 1024
+    default: claude-sonnet-5-5
+    # Output budget INCLUDING reasoning tokens: newer models think before answering,
+    # and a budget that is too small yields a thinking-only response (no answer).
+    max_tokens: 8192
+    models:
+      - claude-haiku-5-5
+      - claude-sonnet-5-5
+      - claude-opus-5-5
+      - claude-fable-5-2
+
   openai:
-    model_id: gpt-4o
-    max_tokens: 1024
+    default: gpt-4o            # TODO: verify against OpenAI's current model list
+    max_tokens: 4096
+    models:
+      - gpt-4o
+
   ollama:
-    model_id: llama3
+    default: llama3
     base_url: http://localhost:11434
+    models:
+      - llama3
+
+  huggingface:
+    default: null              # no sensible default; model_id must be supplied
+    models: []

@@ -1,0 +1,23 @@
+task_id: instr_hard_01
+category: instruction_following
+difficulty: hard
+description: 6 simultaneous verifiable constraints
+prompt_template: |-
+  Write a short piece about the ocean. Follow every requirement:
+  - Write entirely in lowercase letters.
+  - Write exactly 3 bullet points, each starting with '- ', and nothing else.
+  - Do not use the words 'water' or 'wave'.
+  - Include the word 'because'.
+  - Use at least 25 words.
+  - Use at most 50 words.
+evaluation_type: checks
+checks:
+- all_lowercase: true
+- num_bullets: 3
+- forbidden_words:
+  - water
+  - wave
+- contains:
+  - because
+- min_words: 25
+- max_words: 50

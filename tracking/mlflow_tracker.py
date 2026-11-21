@@ -11,7 +11,7 @@ Key design decisions:
   any stale active run left over from a previous failed request.
 """
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import mlflow
 
 
@@ -28,7 +28,7 @@ class EvalTracker:
         mlflow.end_run()  # safety guard: clear any stale active run
 
         run = mlflow.start_run(
-            run_name=f"{model_metadata['model_id']}_{datetime.utcnow():%Y%m%d_%H%M%S}"
+            run_name=f"{model_metadata['model_id']}_{datetime.now(timezone.utc):%Y%m%d_%H%M%S}"
         )
         mlflow.log_params(model_metadata)
         mlflow.log_param("task_set", task_set)
@@ -38,13 +38,31 @@ class EvalTracker:
         mlflow.log_metric(f"score_{task_id}", score)
         mlflow.log_metric(f"latency_ms_{task_id}", latency_ms)
 
-    def log_aggregate(self, scores_by_category: dict):
+    def log_aggregate(
+        self,
+        scores_by_category: dict,
+        category_ci: dict | None = None,
+        tier_scores: dict | None = None,
+        overall_ci: float | None = None,
+    ):
+        """
+        avg_<category>        mean task score in the category
+        ci_<category>         95% CI half-width across tasks
+        tier_<cat>_<tier>     mean score for one category at one difficulty tier
+        overall_score/_ci     mean across categories and its propagated CI
+        """
         for category, score in scores_by_category.items():
             mlflow.log_metric(f"avg_{category}", score)
+        for category, hw in (category_ci or {}).items():
+            mlflow.log_metric(f"ci_{category}", hw)
+        for key, score in (tier_scores or {}).items():
+            mlflow.log_metric(f"tier_{key.replace('/', '_')}", score)
         mlflow.log_metric(
             "overall_score",
             sum(scores_by_category.values()) / len(scores_by_category)
         )
+        if overall_ci is not None:
+            mlflow.log_metric("overall_ci", overall_ci)
 
     def end_run(self):
         mlflow.end_run()

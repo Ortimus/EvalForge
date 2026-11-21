@@ -5,6 +5,9 @@ Returns a 1-5 score plus the judge's rationale for auditability.
 import anthropic
 import os
 
+from adapters.anthropic_adapter import extract_text
+from adapters.config import judge_config
+
 class LLMJudgeScorer:
 
     SYSTEM_PROMPT = """You are a precise, consistent evaluation judge.
@@ -17,11 +20,13 @@ Always respond in JSON with keys: score (int 1-5), rationale (str)."""
     # the request cycle begins — which creates a timing race with load_dotenv().
     # Reading from os.getenv() at instantiation time is always safe because
     # by then load_dotenv() has already run in api/main.py.
-    def __init__(self, judge_model: str = "claude-sonnet-4-20250514"):
+    def __init__(self, judge_model: str | None = None):
+        cfg = judge_config()
         self.client = anthropic.Anthropic(
             api_key=os.getenv("ANTHROPIC_API_KEY")   # ← explicit, not implicit
         )
-        self.judge_model = judge_model
+        self.judge_model = judge_model or cfg["model"]
+        self.max_tokens = cfg.get("max_tokens", 512)
 
     def score(self, response: str, rubric: str, task_prompt: str = "") -> dict:
         user_message = f"""
@@ -38,9 +43,9 @@ Return only valid JSON.
 """
         message = self.client.messages.create(
             model=self.judge_model,
-            max_tokens=512,
+            max_tokens=self.max_tokens,
             system=self.SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_message}],
         )
         import json
-        return json.loads(message.content[0].text)
+        return json.loads(extract_text(message))

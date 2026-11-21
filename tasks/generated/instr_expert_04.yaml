@@ -1,0 +1,26 @@
+task_id: instr_expert_04
+category: instruction_following
+difficulty: expert
+description: 7 interacting constraints with a 10-word window
+prompt_template: |-
+  Write a short piece about a rainy day. Follow every requirement:
+  - Begin your response with the word 'Imagine'.
+  - Include the word 'because'.
+  - Finish with exactly this sentence: 'That is all.'
+  - Use at most 55 words.
+  - Write exactly 3 sentences.
+  - Do not use the words 'rain', 'wet' or 'water'.
+  - Use at least 45 words.
+evaluation_type: checks
+checks:
+- starts_with: Imagine
+- contains:
+  - because
+- ends_with: That is all.
+- max_words: 55
+- num_sentences: 3
+- forbidden_words:
+  - rain
+  - wet
+  - water
+- min_words: 45

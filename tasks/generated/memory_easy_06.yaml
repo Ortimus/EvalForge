@@ -1,0 +1,19 @@
+task_id: memory_easy_06
+category: working_memory
+difficulty: easy
+description: Recall one badge number from 5 records
+prompt_template: |-
+  Here is a staff directory of badge numbers.
+
+  - Jon Tran: badge 7668
+  - Dev Foster: badge 4825
+  - Ada Foster: badge 6268
+  - Iris Jensen: badge 7215
+  - Pia Ellis: badge 5594
+
+  What is the current badge number of Pia Ellis?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: '5594'
+answer_pattern: (?is)answer:\W*5594\W*\Z

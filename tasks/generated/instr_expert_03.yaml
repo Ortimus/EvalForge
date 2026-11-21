@@ -1,0 +1,26 @@
+task_id: instr_expert_03
+category: instruction_following
+difficulty: expert
+description: 7 interacting constraints with a 10-word window
+prompt_template: |-
+  Write a short piece about the ocean. Follow every requirement:
+  - Do not use the words 'sea', 'wave' or 'water'.
+  - Use at least 50 words.
+  - Begin your response with the word 'Often'.
+  - Finish with exactly this sentence: 'That is all.'
+  - Use at most 60 words.
+  - Include the word 'because'.
+  - Write exactly 4 sentences.
+evaluation_type: checks
+checks:
+- forbidden_words:
+  - sea
+  - wave
+  - water
+- min_words: 50
+- starts_with: Often
+- ends_with: That is all.
+- max_words: 60
+- contains:
+  - because
+- num_sentences: 4

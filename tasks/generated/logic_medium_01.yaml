@@ -1,0 +1,19 @@
+task_id: logic_medium_01
+category: logical_deduction
+difficulty: medium
+description: Transitive height ordering over 6 people
+prompt_template: |-
+  Consider these statements about 6 people.
+
+  Chen is taller than Leo.
+  Leo is taller than Farah.
+  Farah is taller than Dara.
+  Chen is shorter than Alice.
+  Hana is taller than Alice.
+
+  Assume only these statements are true. Who is the shortest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Dara
+answer_pattern: (?is)answer:\W*Dara\W*\Z

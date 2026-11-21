@@ -1,0 +1,13 @@
+task_id: analogy_easy_05
+category: analogical_reasoning
+difficulty: easy
+description: Complete the analogy
+prompt_template: |-
+  Complete the analogy with a single word or short phrase.
+
+  Eye : See :: Ear : ___
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: hear
+answer_pattern: (?is)answer:\W*(?:(?:a|an|the)\s+)?(?:hear)(?:\s*\([^)\n]*\))?\W*\Z

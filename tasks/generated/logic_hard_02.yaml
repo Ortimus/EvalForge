@@ -1,0 +1,26 @@
+task_id: logic_hard_02
+category: logical_deduction
+difficulty: hard
+description: Transitive height ordering over 10 people
+prompt_template: |-
+  Consider these statements about 10 people.
+
+  Ivo is taller than Elio.
+  Chen is taller than Dara.
+  Farah is older than Kara.
+  Chen is older than Gus.
+  Gus is taller than Hana.
+  Bruno is shorter than Hana.
+  Dara is older than Farah.
+  Kara is shorter than Bruno.
+  Farah is taller than Chen.
+  Gus is shorter than Elio.
+  Farah is shorter than Kara.
+  Dara is taller than Leo.
+
+  Assume only these statements are true. Who is the seventh tallest?
+
+  Keep any reasoning brief. End your response with a final line of the form 'Answer: <answer>'.
+evaluation_type: regex
+expected_answer: Farah
+answer_pattern: (?is)answer:\W*Farah\W*\Z
